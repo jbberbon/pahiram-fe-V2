@@ -1,0 +1,10 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/page": "app/page.js",
+  "/icon.ico/route": "app/icon.ico/route.js",
+  "/(protected)/@ADMIN/dashboard/page": "app/(protected)/@ADMIN/dashboard/page.js",
+  "/(protected)/@OFFICE/@LENDING_OFFICES/@COSUPERVISOR/dashboard/page": "app/(protected)/@OFFICE/@LENDING_OFFICES/@COSUPERVISOR/dashboard/page.js",
+  "/(protected)/@OFFICE/@LENDING_OFFICES/@EMPLOYEE/dashboard/page": "app/(protected)/@OFFICE/@LENDING_OFFICES/@EMPLOYEE/dashboard/page.js",
+  "/(protected)/@OFFICE/@PLO/@COSUPERVISOR/dashboard/page": "app/(protected)/@OFFICE/@PLO/@COSUPERVISOR/dashboard/page.js",
+  "/(protected)/@OFFICE/@LENDING_OFFICES/@SUPERVISOR/dashboard/page": "app/(protected)/@OFFICE/@LENDING_OFFICES/@SUPERVISOR/dashboard/page.js"
+}

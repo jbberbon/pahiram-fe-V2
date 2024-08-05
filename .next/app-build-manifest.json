@@ -1,0 +1,75 @@
+{
+  "pages": {
+    "/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
+    ],
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/page.js"
+    ],
+    "/(protected)/@ADMIN/dashboard/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/@ADMIN/dashboard/page.js"
+    ],
+    "/(protected)/@OFFICE/@FAO/@COSUPERVISOR/dashboard/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/@OFFICE/@FAO/@COSUPERVISOR/dashboard/page.js"
+    ],
+    "/(protected)/@OFFICE/@FAO/@SUPERVISOR/dashboard/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/@OFFICE/@FAO/@SUPERVISOR/dashboard/page.js"
+    ],
+    "/(protected)/@OFFICE/@FAO/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/@OFFICE/@FAO/layout.js"
+    ],
+    "/(protected)/@OFFICE/@LENDING_OFFICES/@COSUPERVISOR/dashboard/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/@OFFICE/@LENDING_OFFICES/@COSUPERVISOR/dashboard/page.js"
+    ],
+    "/(protected)/@OFFICE/@LENDING_OFFICES/@EMPLOYEE/dashboard/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/@OFFICE/@LENDING_OFFICES/@EMPLOYEE/dashboard/page.js"
+    ],
+    "/(protected)/@OFFICE/@LENDING_OFFICES/@SUPERVISOR/dashboard/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/@OFFICE/@LENDING_OFFICES/@SUPERVISOR/dashboard/page.js"
+    ],
+    "/(protected)/@OFFICE/@LENDING_OFFICES/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/@OFFICE/@LENDING_OFFICES/layout.js"
+    ],
+    "/(protected)/@OFFICE/@PLO/@COSUPERVISOR/dashboard/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/@OFFICE/@PLO/@COSUPERVISOR/dashboard/page.js"
+    ],
+    "/(protected)/@OFFICE/@PLO/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/@OFFICE/@PLO/layout.js"
+    ],
+    "/(protected)/@OFFICE/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/@OFFICE/layout.js"
+    ],
+    "/(protected)/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/layout.js"
+    ]
+  }
+}
