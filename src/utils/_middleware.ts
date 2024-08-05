@@ -29,3 +29,4 @@ export const authMiddleware = async ({ request }: MiddlewareFunctionProps) => {
 
     return NextResponse.next();
 };
+

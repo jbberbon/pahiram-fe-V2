@@ -7,6 +7,7 @@ const globalMiddlewares = {
 
 const middlewares = {
     '/': authMiddleware,
+    ''
 }
 
 export const middleware = createMiddleware(middlewares, globalMiddlewares);
