@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import {useEffect, useState} from "react";
 import {ChevronsUpDown} from "lucide-react"
 
 import {useMediaQuery} from "@/hooks/useMediaQuery";
@@ -15,17 +16,33 @@ import {
     SelectTrigger,
     SelectValue
 } from "@/components/ui/select";
-import {useViewStore} from "@/hooks/useView";
-
+import {filterViewsList, findViewsListElement, VIEWS_LIST} from "@/CONSTANTS/VIEWS_LIST";
+import {useRouter} from "next/navigation";
+import {UrlUtils} from "@/utils/urlUtils";
+import {UserCookie} from "@/server/actions/userCookie";
 
 export function SelectView() {
+
+    let userRole;
+
     const [open, setOpen] = React.useState(false);
     const isDesktop = useMediaQuery("(min-width: 768px)");
+    const [selectedView, setSelectedView] = useState<string>("");
 
-    const {views, selectedView, setSelectedView} = useViewStore((state: any) => state);
+    const router = useRouter();
+
+    const currentUrlView = UrlUtils.getBaseUrlPath();
+
+    const viewObject = findViewsListElement(currentUrlView);
 
     const handleSelect = (view: string) => {
-        setSelectedView(view);
+        const selectedView = VIEWS_LIST[view as keyof typeof VIEWS_LIST];
+        if (selectedView) {
+            setSelectedView(view);
+            router.replace(selectedView.href);
+        } else {
+            console.error(`View ${view} not found in VIEWS_LIST`);
+        }
         setOpen(false);
     };
 
@@ -33,29 +50,43 @@ export function SelectView() {
         setOpen(isOpen);
     };
 
-    const renderViewList = () => (
-        <SelectContent>
-            <SelectGroup>
-                <SelectLabel>Views</SelectLabel>
-                {views.map((view: string) => (
-                    <SelectItem
-                        key={view}
-                        value={view}
-                        onSelect={() => handleSelect(view)}
-                    >
-                        {view}
-                    </SelectItem>
-                ))}
-            </SelectGroup>
-        </SelectContent>
-    );
+    useEffect(() => {
+        async function fetchUserData() {
+            userRole = await UserCookie.getRoleFromCooke();
+        }
+
+        fetchUserData();
+    }, []);
+
+
+    const renderViewList = () => {
+
+        const filteredViews = filterViewsList(userRole);
+
+        return (
+            <SelectContent>
+                <SelectGroup>
+                    <SelectLabel>Views</SelectLabel>
+                    {filteredViews.map((view: any) => (
+                        <SelectItem
+                            key={view.label}
+                            value={view.label}
+                            onSelect={() => handleSelect(view.label)}
+                        >
+                            {view.label}
+                        </SelectItem>
+                    ))}
+                </SelectGroup>
+            </SelectContent>
+        );
+    };
 
     if (isDesktop) {
         return (
-            <Select value={selectedView}
-                    onValueChange={(value) => handleSelect(views.find((view: string) => view === value)!)}>
+            <Select value={selectedView || viewObject?.label}
+                    onValueChange={(value) => handleSelect(value)}>
                 <SelectTrigger onClick={() => handleOpenChange(true)} className="w-[180px]">
-                    <SelectValue placeholder="Select a view"/>
+                    <SelectValue/>
                 </SelectTrigger>
                 {renderViewList()}
             </Select>
@@ -66,13 +97,13 @@ export function SelectView() {
         <Drawer open={open} onOpenChange={handleOpenChange}>
             <DrawerTrigger asChild>
                 <Button variant="outline" className="w-[150px] justify-between">
-                    {selectedView ? selectedView : "+ Set view"}
+                    {selectedView ? selectedView : viewObject?.label}
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50"/>
                 </Button>
             </DrawerTrigger>
             <DrawerContent>
                 <div className="mt-4 border-t p-4">
-                    {views.map((view: string) => (
+                    {Object.keys(VIEWS_LIST).map((view: string) => (
                         <Button
                             key={view}
                             variant="ghost"

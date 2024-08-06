@@ -1,17 +1,34 @@
 import {createMiddleware} from 'next-easy-middlewares';
-import {authMiddleware} from "@/utils/_middleware";
+import {
+    adminMiddleware,
+    adminViewMiddleware,
+    authMiddleware,
+    borrowViewMiddleware,
+    loginMiddleware,
+    officeViewMiddleware
+} from "@/utils/_middleware";
 
 const globalMiddlewares = {
     before: authMiddleware,
 }
 
 const middlewares = {
-    '/': authMiddleware,
-    ''
+    '/auth/login': loginMiddleware,
+    '/admin/*': adminMiddleware,
+
+    // Views routing logic
+    '/borrow': borrowViewMiddleware,
+    '/admin': adminViewMiddleware,
+    '/office': officeViewMiddleware,
+
 }
 
 export const middleware = createMiddleware(middlewares, globalMiddlewares);
 
 export const config = {
-    matcher: ['/((?!api/|_next/|_static|_vercel|[\\w-]+\\.\\w+).*)'],
+    matcher: [
+        "/((?!.*\\..*|_next|public|public/.*|.*\\.css$).*)",
+        "/",
+        "/(api|trpc)(.*)",
+    ],
 };

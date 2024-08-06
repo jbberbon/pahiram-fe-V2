@@ -9,7 +9,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import {siteConfig} from "@/config/siteConfig";
+import {siteConfig} from "@/siteConfig";
 
 export function SheetMenu() {
   return (

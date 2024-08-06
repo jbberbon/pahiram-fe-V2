@@ -4,15 +4,16 @@ export const EMPLOYEE_MENULIST = [
     {
         groupLabel: "",
         menus: [
+
             {
-                href: "/penalty-clearance",
-                label: "Penalty Clearance",
+                href: "/office/finance-accounting-office/dashboard",
+                label: "Dashboard",
                 icon: Users,
                 submenus: [],
             },
             {
-                href: "/dashboard",
-                label: "Dashboard",
+                href: "/office/finance-accounting-office/penalty-clearance",
+                label: "Penalty Clearance",
                 icon: Users,
                 submenus: [],
             },

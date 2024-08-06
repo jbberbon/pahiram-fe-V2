@@ -1,12 +1,17 @@
-import {getFirstMenuItem} from "@/lib/menuList";
+import {getFirstMenuItemOffice} from "@/lib/menuList";
 import {useUserStore} from "@/hooks/useUser";
+import {cookies} from "next/headers";
 
 /**
  * List of public routes
  * These routes do not require authentication
  * @type {string[]}
  */
-export const publicRoutes = ["/", "/auth/new-verification"];
+
+export const loginPage = "/auth/login";
+
+
+export const publicRoutes = ["/", "/auth/new-verification", loginPage];
 
 /**
  * List of private routes
@@ -15,7 +20,7 @@ export const publicRoutes = ["/", "/auth/new-verification"];
  */
 
 export const authRoutes = [
-    "/auth/login",
+    loginPage,
     "/auth/error",
     "/auth/reset",
     "/auth/new-password",
@@ -31,6 +36,8 @@ export const authRoutes = [
 export const apiAuthPrefix = "/api/auth";
 
 export const DEFAULT_LOGIN_REDIRECT = () => {
-    const {role, office} = useUserStore.getState().userData;
-    return getFirstMenuItem(role.toString(), office.toString());
+    const cookieHeader = cookies().get('auth');
+    const auth = cookieHeader ? JSON.parse(cookieHeader.value) : null;
+    const {role, department_code} = auth.user;
+    return getFirstMenuItemOffice(role, department_code);
 };
