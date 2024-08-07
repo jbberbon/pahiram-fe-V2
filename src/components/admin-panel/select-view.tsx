@@ -19,11 +19,11 @@ import {
 import {filterViewsList, findViewsListElement, VIEWS_LIST} from "@/CONSTANTS/VIEWS_LIST";
 import {useRouter} from "next/navigation";
 import {UrlUtils} from "@/utils/urlUtils";
-import {UserCookie} from "@/server/actions/userCookie";
+import {getUserFromCookie} from "@/server/actions/getRoleFromCookie";
 
 export function SelectView() {
 
-    let userRole;
+    const [userData, setUserData] = useState<any>(null);
 
     const [open, setOpen] = React.useState(false);
     const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -52,16 +52,16 @@ export function SelectView() {
 
     useEffect(() => {
         async function fetchUserData() {
-            userRole = await UserCookie.getRoleFromCooke();
+            const user = await getUserFromCookie();
+            setUserData(user)
         }
-
         fetchUserData();
     }, []);
 
 
     const renderViewList = () => {
 
-        const filteredViews = filterViewsList(userRole);
+        const filteredViews = filterViewsList(userData);
 
         return (
             <SelectContent>

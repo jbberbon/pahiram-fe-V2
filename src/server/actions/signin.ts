@@ -21,7 +21,7 @@ export const signin = async (values: z.infer<typeof LoginSchema>) => {
             first_name: "John",
             last_name: "Doe",
             email: "john.doe@example.com",
-            department_code: "ITRO", // example department code
+            department_code: "PLO", // example department code
             role: "SUPERVISOR", // example role
             is_admin: true,
         },

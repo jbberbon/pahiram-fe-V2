@@ -17,9 +17,8 @@ const VIEWS_LIST_LABELS = Object.values(VIEWS_LIST).map((view) => view.label);
 
 const findViewsListElement = (viewHref: string) => Object.values(VIEWS_LIST).find((viewElement) => viewElement.href === viewHref);
 
-const filterViewsList = (userData: object) => {
+const filterViewsList = (userData: any) => {
     let filteredViews = Object.values(VIEWS_LIST);
-
     if (userData) {
         if (!userData.is_admin) {
             filteredViews = filteredViews.filter(view => view.label !== "Admin");
@@ -28,7 +27,6 @@ const filterViewsList = (userData: object) => {
             filteredViews = filteredViews.filter(view => view.label === "Borrow");
         }
     }
-
     return filteredViews;
 }
 

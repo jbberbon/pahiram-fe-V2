@@ -17,7 +17,7 @@ export const SUPERVISOR_MENULIST = [
         groupLabel: "Management",
         menus: [
             {
-                href: "/office/finance-accounting-office/office-accounts",
+                href: "/office/finance-accounting-office/manage-office-accounts",
                 label: "Office Accounts",
                 icon: Users,
                 submenus: [],
