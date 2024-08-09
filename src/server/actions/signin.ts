@@ -4,8 +4,8 @@ import {LoginSchema} from "@/server/schemas";
 import {z} from "zod";
 import {cookies} from "next/headers";
 
-export const signin = async (values: z.infer<typeof LoginSchema>) => {
 
+export const signin = async (values: z.infer<typeof LoginSchema>) => {
 
     const validatedFields = LoginSchema.safeParse(values);
 
@@ -21,8 +21,8 @@ export const signin = async (values: z.infer<typeof LoginSchema>) => {
             first_name: "John",
             last_name: "Doe",
             email: "john.doe@example.com",
-            department_code: "ITRO", // example department code
-            role: "SUPERVISOR", // exa`mple role
+            department_code: "PLO", // example department code
+            role: "SUPERVISOR", // example role
             is_admin: true,
         },
         apcis_token: "dummy_apcis_token",
@@ -33,15 +33,15 @@ export const signin = async (values: z.infer<typeof LoginSchema>) => {
         return {error: "Invalid credentials!"};
     }
 
-    if (response.user.department_code) {
-        cookies().set('view', 'office', {secure: true});
-    } else {
-        cookies().set('view', 'borrow', {secure: true});
-    }
+    const authCookie = JSON.stringify({
+        user: response.user,
+        isAuthenticated: 'true',
+        apcisToken: response.apcis_token,
+        pahiramToken: response.pahiram_token,
+    });
 
-    cookies().set('isAuthenticated', 'true', {secure: true});
-    cookies().set("apcisToken", response.apcis_token, {secure: true});
-    cookies().set("pahiramToken", response.pahiram_token, {secure: true});
+    cookies().set('auth', authCookie, {httpOnly: true, secure: false, maxAge: 60 * 60 * 24,});
+
 
     return {success: "Login success!", data: response};
 }

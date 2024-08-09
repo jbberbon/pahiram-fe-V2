@@ -9,7 +9,7 @@ import {Button} from "@/components/ui/button";
 import {Menu} from "@/components/admin-panel/menu";
 import {useSidebarToggle} from "@/hooks/useSidebarToggle";
 import {SidebarToggle} from "@/components/admin-panel/sidebar-toggle";
-import {siteConfig} from "@/config/siteConfig"
+import {siteConfig} from "@/siteConfig"
 import {useFirstMenuItem} from "@/lib/menuList";
 
 export function Sidebar() {

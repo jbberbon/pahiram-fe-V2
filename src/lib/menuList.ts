@@ -1,8 +1,10 @@
 "use client";
 
-import {siteConfig} from "@/config/siteConfig";
+import {siteConfig} from "@/siteConfig";
 import {LucideIcon} from "lucide-react";
 import {UserState, useUserStore} from "@/hooks/useUser";
+import {UrlUtils} from "@/utils/urlUtils";
+import {findViewsListElement} from "@/CONSTANTS/VIEWS_LIST";
 
 type Submenu = {
     href: string;
@@ -23,21 +25,25 @@ type Group = {
     menus: Menu[];
 };
 
-function getRoleBasedNavItems(office: string, role: any): Group[] {
+function getRoleBasedNavItems(key: string): Group[] {
+    const navItems = siteConfig.navItems.find((item) => (item as any)[key]);
+    return navItems ? (navItems as any)[key] : [];
+}
 
-    const officeNavItems = siteConfig.navItems.find((item) => (item as any)[office]);
-    const navItems = siteConfig.navItems.find((item) => (item as any)[role]);
+function getRoleBasedNavItemsOffice(key: string, subKey: any): Group[] {
+    const officeNavItems = siteConfig.navItems.find((item) => (item as any)[key]);
+    const navItems = siteConfig.navItems.find((item) => (item as any)[subKey]);
 
     if (!officeNavItems) {
         const lendingOfficeNavItems = siteConfig.navItems.find((item) => (item as any)["LENDING_OFFICES"]);
-        const lendingOfficePositionNavItems = (lendingOfficeNavItems as any)["LENDING_OFFICES"].find((item: any) => item[role]);
-        return lendingOfficePositionNavItems ? (lendingOfficePositionNavItems as any)[role] : [];
+        const lendingOfficePositionNavItems = (lendingOfficeNavItems as any)["LENDING_OFFICES"].find((item: any) => item[subKey]);
+        return lendingOfficePositionNavItems ? (lendingOfficePositionNavItems as any)[subKey] : [];
     }
     if (officeNavItems) {
-        const positionNavItems = (officeNavItems as any)[office].find((item: any) => item[role]);
-        return positionNavItems ? (positionNavItems as any)[role] : [];
+        const positionNavItems = (officeNavItems as any)[key].find((item: any) => item[subKey]);
+        return positionNavItems ? (positionNavItems as any)[subKey] : [];
     }
-    return navItems ? (navItems as any)[role] : [];
+    return navItems ? (navItems as any)[subKey] : [];
 }
 
 function transformNavItems(navItems: Group[], pathname: string): Group[] {
@@ -57,20 +63,30 @@ function transformNavItems(navItems: Group[], pathname: string): Group[] {
 
 export function useMenuList(pathname: string): Group[] {
     const {role, office} = useUserStore((state: unknown) => (state as UserState).userData);
-    const roleBasedNavItems = getRoleBasedNavItems(office.toString(), role);
-    return transformNavItems(roleBasedNavItems, pathname);
+    const officeNavItems = getRoleBasedNavItemsOffice(office.toString(), role);
+
+    const baseUrlPath = UrlUtils.getBaseUrlPath();
+    const viewObject = findViewsListElement(baseUrlPath);
+
+    if (viewObject?.label !== "Office") {
+        console.log(viewObject?.label.toUpperCase());
+        const navItems = getRoleBasedNavItems(viewObject?.label.toUpperCase() || "");
+        return transformNavItems(navItems, pathname);
+    }
+
+    return transformNavItems(officeNavItems, pathname);
 }
 
 export function useFirstMenuItem() {
     const {role, office} = useUserStore((state: unknown) => (state as UserState).userData);
 
-    return getFirstMenuItem(role.toString(), office.toString());
+    return getFirstMenuItemOffice(role.toString(), office.toString());
 }
 
-export function getFirstMenuItem(role: string, office: string): string {
-    const navItems = getRoleBasedNavItems(office, role);
+export function getFirstMenuItemOffice(role: string, office: string): string {
+    const navItems = getRoleBasedNavItemsOffice(office, role);
     if (navItems.length > 0 && navItems[0].menus.length > 0) {
         return navItems[0].menus[0].href;
     }
-    return "/dashboard";
+    return "/";
 }

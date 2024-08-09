@@ -43,6 +43,7 @@ export const useUserStore = create<UserState>()(
                 pahiramToken: '',
             },
             setAuthDataAndUserData: (response: any) => {
+
                 set({
                     userData: {
                         avatarName: GenerateAvatarName(
@@ -65,6 +66,7 @@ export const useUserStore = create<UserState>()(
                         pahiramToken: response?.pahiram_token,
                     },
                 });
+
             },
             handleSignout: () => {
                 set({

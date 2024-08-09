@@ -1,6 +1,5 @@
 "use client";
 
-import {useRouter} from "next/navigation";
 import {Card} from "@/components/ui/card";
 import {Input} from "@/components/ui/input";
 import {Checkbox} from "@/components/ui/checkbox";
@@ -18,7 +17,6 @@ import {FormError} from "@/components/form-error";
 import {FormSuccess} from "@/components/form-success";
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {UserState, useUserStore} from "@/hooks/useUser";
-import {useFirstMenuItem} from "@/lib/menuList";
 
 export default function LoginForm() {
 
@@ -28,7 +26,6 @@ export default function LoginForm() {
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
 
-    const router = useRouter();
 
     // TODO: Add loading spinner
 
@@ -43,7 +40,6 @@ export default function LoginForm() {
         },
     });
 
-    const firstMenuItem = useFirstMenuItem();
 
     function onSubmit(values: z.infer<typeof LoginSchema>) {
         setIsLoading(true);
@@ -64,7 +60,8 @@ export default function LoginForm() {
 
                         setSuccess(data.success);
                         setAuthDataAndUserData(data.data);
-                        router.push(firstMenuItem || "/");
+
+                        window.location.reload();
                     }
 
                 })

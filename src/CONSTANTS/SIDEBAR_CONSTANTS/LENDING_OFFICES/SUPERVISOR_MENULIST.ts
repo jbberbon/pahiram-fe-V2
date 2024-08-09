@@ -5,13 +5,13 @@ export const SUPERVISOR_MENULIST = [
         groupLabel: "",
         menus: [
             {
-                href: "/dashboard",
+                href: "/office/lending-offices/dashboard",
                 label: "Dashboard",
                 icon: Users,
                 submenus: [],
             },
             {
-                href: "/borrowing-history",
+                href: "/office/lending-offices/borrowing-history",
                 label: "Borrowing History",
                 icon: Users,
                 submenus: [],
@@ -24,25 +24,25 @@ export const SUPERVISOR_MENULIST = [
         menus: [
 
             {
-                href: "/manage-transactions",
+                href: "/office/lending-offices/manage-transactions",
                 label: "Transactions",
                 icon: Users,
                 submenus: [],
             },
             {
-                href: "/manage-inventory",
+                href: "/office/lending-offices/manage-inventory",
                 label: "Inventory",
                 icon: Users,
                 submenus: [],
             },
             {
-                href: "/manage-penalties",
+                href: "/office/lending-offices/manage-penalties",
                 label: "Penalties",
                 icon: Users,
                 submenus: [],
             },
             {
-                href: "/manage-office-accounts",
+                href: "/office/lending-offices/manage-office-accounts",
                 label: "Office Accounts",
                 icon: Users,
                 submenus: [],

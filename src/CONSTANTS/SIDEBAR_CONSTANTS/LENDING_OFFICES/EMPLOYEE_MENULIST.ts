@@ -5,13 +5,13 @@ export const EMPLOYEE_MENULIST = [
         groupLabel: "",
         menus: [
             {
-                href: "/dashboard",
+                href: "/office/lending-offices/dashboard",
                 label: "Dashboard",
                 icon: Users,
                 submenus: [],
             },
             {
-                href: "/penalty-clearance",
+                href: "/office/lending-offices/penalty-clearance",
                 label: "Penalty Clearance",
                 icon: Users,
                 submenus: [],

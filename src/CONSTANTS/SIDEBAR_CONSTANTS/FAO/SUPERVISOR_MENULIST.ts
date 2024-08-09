@@ -5,7 +5,7 @@ export const SUPERVISOR_MENULIST = [
         groupLabel: "",
         menus: [
             {
-                href: "/penalty-clearance",
+                href: "/office/finance-accounting-office/penalty-clearance",
                 label: "Penalty Clearance",
                 icon: Users,
                 submenus: [],
@@ -17,7 +17,7 @@ export const SUPERVISOR_MENULIST = [
         groupLabel: "Management",
         menus: [
             {
-                href: "/office-accounts",
+                href: "/office/finance-accounting-office/manage-office-accounts",
                 label: "Office Accounts",
                 icon: Users,
                 submenus: [],
