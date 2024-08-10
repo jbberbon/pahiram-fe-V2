@@ -3,7 +3,7 @@ import PlaceholderContent from "@/components/demo/placeholder-content";
 
 export default function AdminPage() {
     return (
-        <ContentLayout title="PLO Manage Accounts">
+        <ContentLayout title="View Penalties">
             <PlaceholderContent />
         </ContentLayout>
     )
