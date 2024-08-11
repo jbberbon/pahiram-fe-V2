@@ -65,6 +65,7 @@ export const borrowViewMiddleware = async ({
 export const loginMiddleware = async ({ request }: MiddlewareFunctionProps) => {
   const cookieHeader = cookies().get("auth");
   const auth = cookieHeader ? JSON.parse(cookieHeader.value) : null;
+  const nextUrl = request.nextUrl;
 
   if (auth && auth.user) {
     const nextUrl = request.nextUrl;
@@ -75,16 +76,17 @@ export const loginMiddleware = async ({ request }: MiddlewareFunctionProps) => {
     ) {
       console.log("an employee");
       return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT(), nextUrl));
-    } else if (auth.user.role === "BORROW") {
+    } else if (auth.user.role === "BORROWER") {
       console.log("A borrower fcking sht");
       return NextResponse.redirect(new URL(borrowerDefaultRedirect, nextUrl));
     }
 
-    // return // unauthorized
+    // return; // unauthorized
     console.log("Hi");
   }
+  return NextResponse.redirect(new URL(borrowerDefaultRedirect, nextUrl));
 
-  return NextResponse.next();
+  // return NextResponse.next();
 };
 
 export const authMiddleware = async ({ request }: MiddlewareFunctionProps) => {

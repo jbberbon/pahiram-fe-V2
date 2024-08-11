@@ -34,7 +34,7 @@ export const siteConfig = {
     address: "123 Street, City, Philippines",
     navItems: [
         {
-            BORROW: BORROW,
+            BORROWER: BORROW,
         },
         {
             ADMIN: ADMIN,
