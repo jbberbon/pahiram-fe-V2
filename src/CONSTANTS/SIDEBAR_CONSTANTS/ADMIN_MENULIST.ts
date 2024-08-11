@@ -5,13 +5,13 @@ export const ADMIN_MENULIST = [
         groupLabel: "",
         menus: [
             {
-                href: "/dashboard",
+                href: "/admin/dashboard",
                 label: "Dashboard",
                 icon: Users,
                 submenus: [],
             },
             {
-                href: "/manage-accounts",
+                href: "/admin/manage-accounts",
                 label: "Manage Accounts",
                 icon: Users,
                 submenus: [],

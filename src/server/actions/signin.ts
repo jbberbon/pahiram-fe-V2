@@ -22,7 +22,7 @@ export const signin = async (values: z.infer<typeof LoginSchema>) => {
             firstName: "John",
             lastName: "Doe",
             email: "john.doe@apc.edu.ph",
-            departmentCode: "BMO", // example department code
+            departmentCode: "FAO", // example department code
             role: "SUPERVISOR", // example role
             isAdmin: false,
         },

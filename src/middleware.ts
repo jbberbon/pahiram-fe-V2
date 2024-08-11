@@ -6,7 +6,8 @@ import {
     borrowViewMiddleware,
     loginMiddleware,
     officeViewMiddleware,
-    supervisorMiddleware
+    supervisorMiddleware,
+    endorserMiddleware
 } from "@/utils/_middleware";
 
 const globalMiddlewares = {
@@ -17,13 +18,12 @@ const middlewares = {
     '/auth/login': loginMiddleware,
     '/admin/*': adminMiddleware,
     '/office/*': supervisorMiddleware,
+    '/borrow/manage-endorsements': endorserMiddleware,
 
     // Views routing logic
     '/borrow': borrowViewMiddleware,
     '/admin': adminViewMiddleware,
     '/office': officeViewMiddleware,
-
-
 }
 
 export const middleware = createMiddleware(middlewares, globalMiddlewares);
