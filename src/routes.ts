@@ -1,6 +1,8 @@
 import {getFirstMenuItemOffice} from "@/lib/menuList";
 import {useUserStore} from "@/hooks/useUser";
 import {cookies} from "next/headers";
+import { ADMIN_MENULIST } from "./CONSTANTS/SIDEBAR_CONSTANTS/ADMIN_MENULIST";
+import { BORROW_MENULIST } from "./CONSTANTS/SIDEBAR_CONSTANTS/BORROW_MENULIST";
 
 /**
  * List of public routes
@@ -42,3 +44,7 @@ export const DEFAULT_LOGIN_REDIRECT = () => {
 };
 
 export const supervisorRoutes = ["/manage-office-accounts"];
+
+export const adminDefaultRedirect = ADMIN_MENULIST[0]?.menus[0]?.href;
+
+export const borrowerDefaultRedirect = BORROW_MENULIST[0]?.menus[0]?.href;

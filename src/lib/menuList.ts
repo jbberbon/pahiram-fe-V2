@@ -64,7 +64,7 @@ function transformNavItems(navItems: Group[], pathname: string): Group[] {
 
 export function useMenuList(pathname: string): Group[] {
     const {role, office, email} = useUserStore((state: unknown) => (state as UserState).userData);
-    const officeNavItems = getRoleBasedNavItemsOffice(office.toString(), role);
+    const officeNavItems = getRoleBasedNavItemsOffice(office?.toString(), role);
 
     const baseUrlPath = UrlUtils.getBaseUrlPath();
     const viewObject = findViewsListElement(baseUrlPath);
@@ -88,7 +88,7 @@ export function useMenuList(pathname: string): Group[] {
 export function useFirstMenuItem() {
     const {role, office} = useUserStore((state: unknown) => (state as UserState).userData);
 
-    return getFirstMenuItemOffice(role.toString(), office.toString());
+    return getFirstMenuItemOffice(role.toString(), office?.toString());
 }
 
 export function getFirstMenuItemOffice(role: string, office: string): string {
