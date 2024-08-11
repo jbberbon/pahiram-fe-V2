@@ -22,8 +22,8 @@ export const signin = async (values: z.infer<typeof LoginSchema>) => {
             firstName: "John",
             lastName: "Doe",
             email: "john.doe@apc.edu.ph",
-            departmentCode: null, // example department code
-            role: "BORROWER", // example role
+            departmentCode: "FAO", // example department code
+            role: "SUPERVISOR", // example role
             isAdmin: false,
         },
         apcsisToken: "dummy_apcis_token",

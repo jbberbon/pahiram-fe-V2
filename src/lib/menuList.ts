@@ -5,7 +5,7 @@ import {LucideIcon} from "lucide-react";
 import {UserState, useUserStore} from "@/hooks/useUser";
 import {UrlUtils} from "@/utils/urlUtils";
 import {findViewsListElement} from "@/CONSTANTS/VIEWS_LIST";
-import {FILTERED_FOR_ENDORSER} from "@/CONSTANTS/SIDEBAR_CONSTANTS/BORROW_MENULIST";
+import {FILTERED_BORROW_MENULIST_FOR_STUDENTS} from "@/CONSTANTS/SIDEBAR_CONSTANTS/BORROW_MENULIST";
 
 type Submenu = {
     href: string;
@@ -71,13 +71,18 @@ export function useMenuList(pathname: string): Group[] {
 
     const [emailLocalPart, emailDomain] = email.split('@');
 
+    console.log("Email local part: ", emailLocalPart);
+    console.log("Email domain: ", emailDomain);
+    console.log(" View Object: ", viewObject)
 
     if (viewObject?.label !== "Office") {
         const navItems = getRoleBasedNavItems(viewObject?.label.toUpperCase() || "");
-        if (viewObject?.label === "Borrow" && emailDomain !== "apc.edu.ph") {
-            const filteredMenuListForEndorser: Group[] = FILTERED_FOR_ENDORSER;
-            return transformNavItems(filteredMenuListForEndorser, pathname);
+        if (viewObject?.label === "Borrow" && emailDomain === "student.apc.edu.ph") {
+            const studentNavItems: Group[] = FILTERED_BORROW_MENULIST_FOR_STUDENTS;
+            console.log("Student menu list: ", studentNavItems);
+            return transformNavItems(studentNavItems, pathname);
         }
+        console.log("Nav Items: ", navItems)
         return transformNavItems(navItems, pathname);
     }
 

@@ -1,4 +1,23 @@
-import {Users} from "lucide-react";
+import {LucideIcon, Users} from "lucide-react";
+
+type Submenu = {
+    href: string;
+    label: string;
+    active: boolean;
+};
+
+type Menu = {
+    href: string;
+    label: string;
+    active: boolean;
+    icon: LucideIcon;
+    submenus: Submenu[];
+};
+
+type Group = {
+    groupLabel: string;
+    menus: Menu[];
+};
 
 export const BORROW_MENULIST = [
     {
@@ -26,7 +45,8 @@ export const BORROW_MENULIST = [
                 label: "Requests",
                 icon: Users,
                 submenus: [],
-            }, {
+            },
+            {
                 href: "/borrow/manage-endorsements",
                 label: "Endorsements",
                 icon: Users,
@@ -36,13 +56,12 @@ export const BORROW_MENULIST = [
     }
 ]
 
-export const FILTERED_FOR_ENDORSER = BORROW_MENULIST.map(
-    (group: any) => {
-        return {
-            ...group,
-            menus: group.menus.filter(
-                (menu: any): boolean => menu.label !== "Endorsements"
-            ),
-        };
-    }
-);
+export const FILTERED_BORROW_MENULIST_FOR_STUDENTS: Group[] = BORROW_MENULIST.map(group => ({
+    groupLabel: group.groupLabel,
+    menus: group.menus
+        .filter(menu => menu.label !== "Endorsements")
+        .map(menu => ({
+            active: false,
+            ...menu
+        })) as Menu[]
+}));
