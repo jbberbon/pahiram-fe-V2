@@ -5,6 +5,7 @@ import {LucideIcon} from "lucide-react";
 import {UserState, useUserStore} from "@/hooks/useUser";
 import {UrlUtils} from "@/utils/urlUtils";
 import {findViewsListElement} from "@/CONSTANTS/VIEWS_LIST";
+import {FILTERED_FOR_ENDORSER} from "@/CONSTANTS/SIDEBAR_CONSTANTS/BORROW_MENULIST";
 
 type Submenu = {
     href: string;
@@ -62,17 +63,24 @@ function transformNavItems(navItems: Group[], pathname: string): Group[] {
 
 
 export function useMenuList(pathname: string): Group[] {
-    const {role, office} = useUserStore((state: unknown) => (state as UserState).userData);
+    const {role, office, email} = useUserStore((state: unknown) => (state as UserState).userData);
     const officeNavItems = getRoleBasedNavItemsOffice(office.toString(), role);
 
     const baseUrlPath = UrlUtils.getBaseUrlPath();
     const viewObject = findViewsListElement(baseUrlPath);
 
+    const [emailLocalPart, emailDomain] = email.split('@');
+
+
     if (viewObject?.label !== "Office") {
-        console.log(viewObject?.label.toUpperCase());
         const navItems = getRoleBasedNavItems(viewObject?.label.toUpperCase() || "");
+        if (viewObject?.label === "Borrow" && emailDomain !== "apc.edu.ph") {
+            const filteredMenuListForEndorser: Group[] = FILTERED_FOR_ENDORSER;
+            return transformNavItems(filteredMenuListForEndorser, pathname);
+        }
         return transformNavItems(navItems, pathname);
     }
+
 
     return transformNavItems(officeNavItems, pathname);
 }

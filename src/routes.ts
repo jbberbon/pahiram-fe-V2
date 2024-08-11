@@ -32,12 +32,13 @@ export const authRoutes = [
  * @type {string}
  */
 
-// TODO: Change to pahiram backend
 export const apiAuthPrefix = "/api/auth";
 
 export const DEFAULT_LOGIN_REDIRECT = () => {
     const cookieHeader = cookies().get('auth');
     const auth = cookieHeader ? JSON.parse(cookieHeader.value) : null;
-    const {role, department_code} = auth.user;
-    return getFirstMenuItemOffice(role, department_code);
+    const {role, departmentCode: departmentCode, email} = auth.user;
+    return getFirstMenuItemOffice(role, departmentCode);
 };
+
+export const supervisorRoutes = ["/manage-office-accounts"];

@@ -10,13 +10,29 @@ export const COSUPERVISOR_MENULIST = [
                 icon: Users,
                 submenus: [],
             },
+        ],
+    },
+    {
+        groupLabel: "Management",
+        menus: [
             {
-                href: "/office/lending-offices/penalty-clearance",
-                label: "Penalty Clearance",
+                href: "/office/lending-offices/manage-transactions",
+                label: "Transactions",
+                icon: Users,
+                submenus: [],
+            },
+            {
+                href: "/office/lending-offices/manage-inventory",
+                label: "Inventory",
+                icon: Users,
+                submenus: [],
+            },
+            {
+                href: "/office/lending-offices/manage-penalties",
+                label: "Penalties",
                 icon: Users,
                 submenus: [],
             },
         ],
-
     },
 ]

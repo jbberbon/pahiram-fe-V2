@@ -10,9 +10,18 @@ export const COSUPERVISOR_MENULIST = [
                 icon: Users,
                 submenus: [],
             },
+
+
+        ],
+
+    },
+    {
+        groupLabel: "Management",
+        menus: [
+
             {
-                href: "/office/finance-accounting-office/penalty-clearance",
-                label: "Penalty Clearance",
+                href: "/office/finance-accounting-office/manage-penalties",
+                label: "Penalties",
                 icon: Users,
                 submenus: [],
             },

@@ -1,6 +1,7 @@
 import {Users} from "lucide-react";
 
 export const EMPLOYEE_MENULIST = [
+
     {
         groupLabel: "",
         menus: [
@@ -10,13 +11,29 @@ export const EMPLOYEE_MENULIST = [
                 icon: Users,
                 submenus: [],
             },
+        ],
+    },
+    {
+        groupLabel: "Management",
+        menus: [
             {
-                href: "/office/lending-offices/penalty-clearance",
-                label: "Penalty Clearance",
+                href: "/office/lending-offices/manage-transactions",
+                label: "Transactions",
+                icon: Users,
+                submenus: [],
+            },
+            {
+                href: "/office/lending-offices/manage-inventory",
+                label: "Inventory",
+                icon: Users,
+                submenus: [],
+            },
+            {
+                href: "/office/lending-offices/manage-penalties",
+                label: "Penalties",
                 icon: Users,
                 submenus: [],
             },
         ],
-
     },
 ]
