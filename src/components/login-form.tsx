@@ -45,7 +45,6 @@ export default function LoginForm() {
         setIsLoading(true);
         setError("");
         setSuccess("");
-        console.log("Login form submitted")
         startTransition(() => {
             signin(values)
                 .then((data) => {

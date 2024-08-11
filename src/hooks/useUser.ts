@@ -7,6 +7,7 @@ import {OfficeAcronym, RoleForOffice} from '@/CONSTANTS/OFFICES_CONSTANTS';
 export type UserState = {
     userData: {
         avatarName: string,
+        apcId: string,
         firstName: string,
         lastName: string,
         fullName: string,
@@ -29,6 +30,7 @@ export const useUserStore = create<UserState>()(
         (set) => ({
             userData: {
                 avatarName: '',
+                apcId: '',
                 firstName: '',
                 lastName: '',
                 fullName: '',
@@ -47,23 +49,24 @@ export const useUserStore = create<UserState>()(
                 set({
                     userData: {
                         avatarName: GenerateAvatarName(
-                            response?.user?.first_name,
-                            response?.user?.last_name
+                            response?.user?.firstName,
+                            response?.user?.lastName
                         ),
-                        firstName: response?.user?.first_name,
-                        lastName: response?.user?.last_name,
-                        fullName: [response?.user?.first_name, response?.user?.last_name]
+                        apcId: response?.user?.apcId,
+                        firstName: response?.user?.firstName,
+                        lastName: response?.user?.lastName,
+                        fullName: [response?.user?.firstName, response?.user?.lastName]
                             .filter(Boolean)
                             .join(' '),
                         email: response?.user?.email,
-                        office: response?.user?.department_code as OfficeAcronym,
+                        office: response?.user?.departmentCode as OfficeAcronym,
                         role: response?.user?.role as RoleForOffice<OfficeAcronym>,
-                        isAdmin: response?.user?.is_admin,
+                        isAdmin: response?.user?.isAdmin,
                     },
                     authData: {
                         isAuthenticated: true,
-                        apcisToken: response?.apcis_token,
-                        pahiramToken: response?.pahiram_token,
+                        apcisToken: response?.apcisToken,
+                        pahiramToken: response?.pahiramToken,
                     },
                 });
 
@@ -72,6 +75,7 @@ export const useUserStore = create<UserState>()(
                 set({
                     userData: {
                         avatarName: '',
+                        apcId: '',
                         firstName: '',
                         lastName: '',
                         fullName: '',

@@ -18,15 +18,16 @@ export const signin = async (values: z.infer<typeof LoginSchema>) => {
     // Simulate a backend API response with dummy data
     const response = {
         user: {
-            first_name: "John",
-            last_name: "Doe",
-            email: "john.doe@example.com",
-            department_code: "PLO", // example department code
+            apcId: "123456",
+            firstName: "John",
+            lastName: "Doe",
+            email: "john.doe@apc.edu.ph",
+            departmentCode: "BMO", // example department code
             role: "SUPERVISOR", // example role
-            is_admin: true,
+            isAdmin: false,
         },
-        apcis_token: "dummy_apcis_token",
-        pahiram_token: "dummy_pahiram_token",
+        apcsisToken: "dummy_apcis_token",
+        pahiramToken: "dummy_pahiram_token",
     };
 
     if (!response) {
@@ -36,8 +37,8 @@ export const signin = async (values: z.infer<typeof LoginSchema>) => {
     const authCookie = JSON.stringify({
         user: response.user,
         isAuthenticated: 'true',
-        apcisToken: response.apcis_token,
-        pahiramToken: response.pahiram_token,
+        apcisToken: response.apcsisToken,
+        pahiramToken: response.pahiramToken,
     });
 
     cookies().set('auth', authCookie, {httpOnly: true, secure: false, maxAge: 60 * 60 * 24,});

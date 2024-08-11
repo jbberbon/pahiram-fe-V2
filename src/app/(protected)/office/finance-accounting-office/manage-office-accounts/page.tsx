@@ -3,7 +3,7 @@ import PlaceholderContent from "@/components/demo/placeholder-content";
 
 export default function AdminPage() {
     return (
-        <ContentLayout title="FAO Employee">
+        <ContentLayout title="Manage Office Accounts">
             <PlaceholderContent />
         </ContentLayout>
     )

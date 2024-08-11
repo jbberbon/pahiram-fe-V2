@@ -21,7 +21,6 @@ interface MenuProps {
 export function Menu({isOpen}: MenuProps) {
     const pathname = usePathname();
     const menuList = useMenuList(pathname);
-    console.log("menulist:", menuList);
 
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
