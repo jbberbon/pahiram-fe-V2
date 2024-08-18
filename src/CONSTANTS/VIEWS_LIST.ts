@@ -20,10 +20,10 @@ const findViewsListElement = (viewHref: string) => Object.values(VIEWS_LIST).fin
 const filterViewsList = (userData: any) => {
     let filteredViews = Object.values(VIEWS_LIST);
     if (userData) {
-        if (!userData.isAdmin) {
+        if (!userData.is_admin) {
             filteredViews = filteredViews.filter(view => view.label !== "Admin");
         }
-        if (!userData.departmentCode) {
+        if (!userData.department_code) {
             filteredViews = filteredViews.filter(view => view.label === "Borrow");
         }
     }

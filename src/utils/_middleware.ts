@@ -85,8 +85,8 @@ export const borrowViewMiddleware = async ({
 
 export const loginMiddleware = async ({request}: MiddlewareFunctionProps) => {
     const cookieHeader = cookies().get("auth");
-    const auth = cookieHeader ? JSON.parse(cookieHeader.value) : null;
-    const nextUrl = request.nextUrl;
+    const auth = cookieHeader ? JSON.parse(cookieHeader.value).user : null;
+    // const nextUrl = request.nextUrl;
 
     if (auth && auth.user) {
         const nextUrl = request.nextUrl;
@@ -103,7 +103,7 @@ export const loginMiddleware = async ({request}: MiddlewareFunctionProps) => {
         }
 
         // return; // unauthorized
-        console.log("Hi");
+        // console.log("Hi");
     }
 
     return NextResponse.next();

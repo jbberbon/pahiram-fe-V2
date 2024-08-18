@@ -1,15 +1,16 @@
 "use server";
 
-import {cookies} from "next/headers";
+import { cookies } from "next/headers";
 
 export const getUserFromCookie = async () => {
-    const cookie = cookies().get('auth');
+  const cookie = cookies().get("auth");
 
-    if (!cookie) {
-        return null;
-    }
+  if (!cookie) {
+    return null;
+  }
 
-    const {user} = JSON.parse(cookie.value);
+  const user = JSON.parse(cookie.value).user;
+  console.log("GetUserFromCookie", user);
 
-    return user;
-}
+  return user;
+};
