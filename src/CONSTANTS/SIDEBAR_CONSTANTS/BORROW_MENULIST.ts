@@ -46,22 +46,8 @@ export const BORROW_MENULIST = [
                 icon: Users,
                 submenus: [],
             },
-            {
-                href: "/borrow/manage-endorsements",
-                label: "Endorsements",
-                icon: Users,
-                submenus: [],
-            },
+
         ],
     }
 ]
 
-export const FILTERED_BORROW_MENULIST_FOR_STUDENTS: Group[] = BORROW_MENULIST.map(group => ({
-    groupLabel: group.groupLabel,
-    menus: group.menus
-        .filter(menu => menu.label !== "Endorsements")
-        .map(menu => ({
-            active: false,
-            ...menu
-        })) as Menu[]
-}));

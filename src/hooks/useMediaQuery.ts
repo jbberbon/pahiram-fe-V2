@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react';
 
+/**
+ * @param media A media query string
+ * @returns Whether the media query matches.
+ *
+ * @example
+ * const isMobile = useMediaQuery("(max-width: 768px)");
+ */
 export function useMediaQuery(media: string): boolean {
     const [matches, setMatches] = useState(false);
 

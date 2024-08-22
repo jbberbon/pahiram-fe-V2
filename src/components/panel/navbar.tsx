@@ -1,7 +1,7 @@
-import {ModeToggle} from "@/components/mode-toggle";
-import {UserNav} from "@/components/admin-panel/user-nav";
-import {SheetMenu} from "@/components/admin-panel/sheet-menu";
-import {SelectView} from "@/components/admin-panel/select-view";
+import {ModeToggle} from "@/components/common/mode-toggle";
+import {UserNav} from "@/components/panel/user-nav";
+import {SheetMenu} from "@/components/panel/sheet-menu";
+import {SelectView} from "@/components/panel/select-view";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
 import * as React from "react";
 

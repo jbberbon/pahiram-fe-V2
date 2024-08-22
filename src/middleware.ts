@@ -1,24 +1,22 @@
 import {createMiddleware} from 'next-easy-middlewares';
 import {
-    adminMiddleware,
+    protectedAdminRoutesMiddleware,
     adminViewMiddleware,
     authMiddleware,
     borrowViewMiddleware,
-    loginMiddleware,
+    protectedEndorserRoutesMiddleware,
     officeViewMiddleware,
-    supervisorMiddleware,
-    endorserMiddleware
-} from "@/utils/_middleware";
+    protectedSupervisorRoutesMiddleware, protectedOfficeRoutesMiddleware
+} from "@/lib/_middleware";
 
 const globalMiddlewares = {
     before: authMiddleware,
 }
 
 const middlewares = {
-    '/auth/login': loginMiddleware,
-    '/admin/*': adminMiddleware,
-    '/office/*': supervisorMiddleware,
-    '/borrow/manage-endorsements': endorserMiddleware,
+    '/admin/*': protectedAdminRoutesMiddleware,
+    '/office/*': [protectedOfficeRoutesMiddleware, protectedSupervisorRoutesMiddleware],
+    '/borrow/*': protectedEndorserRoutesMiddleware,
 
     // Views routing logic
     '/borrow': borrowViewMiddleware,

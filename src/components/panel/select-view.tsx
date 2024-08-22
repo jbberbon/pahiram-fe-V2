@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {ChevronsUpDown} from "lucide-react"
+import {ChevronsUpDown} from "lucide-react";
 
 import {useMediaQuery} from "@/hooks/useMediaQuery";
 import {Button} from "@/components/ui/button";
@@ -14,15 +14,14 @@ import {
     SelectItem,
     SelectLabel,
     SelectTrigger,
-    SelectValue
+    SelectValue,
 } from "@/components/ui/select";
-import {filterViewsList, findViewsListElement, VIEWS_LIST} from "@/CONSTANTS/VIEWS_LIST";
+import {filterViewsList, findViewsListElement, VIEWS_LIST,} from "@/CONSTANTS/VIEWS_LIST";
 import {useRouter} from "next/navigation";
-import {UrlUtils} from "@/utils/urlUtils";
-import {getUserFromCookie} from "@/server/actions/getRoleFromCookie";
+import getBaseUrlPath from "@/helper/getBaseUrlPath";
+import {getUserFromAuthCookie} from "@/core/data-access/cookies";
 
 export function SelectView() {
-
     const [userData, setUserData] = useState<any>(null);
 
     const [open, setOpen] = React.useState(false);
@@ -31,7 +30,7 @@ export function SelectView() {
 
     const router = useRouter();
 
-    const currentUrlView = UrlUtils.getBaseUrlPath();
+    const currentUrlView = getBaseUrlPath();
 
     const viewObject = findViewsListElement(currentUrlView);
 
@@ -52,15 +51,15 @@ export function SelectView() {
 
     useEffect(() => {
         async function fetchUserData() {
-            const user = await getUserFromCookie();
-            setUserData(user)
+            const user = await getUserFromAuthCookie();
+            setUserData(user);
+            console.log("User from select view: ", user);
         }
+
         fetchUserData();
     }, []);
 
-
     const renderViewList = () => {
-
         const filteredViews = filterViewsList(userData);
 
         return (
@@ -83,9 +82,14 @@ export function SelectView() {
 
     if (isDesktop) {
         return (
-            <Select value={selectedView || viewObject?.label}
-                    onValueChange={(value) => handleSelect(value)}>
-                <SelectTrigger onClick={() => handleOpenChange(true)} className="w-[180px]">
+            <Select
+                value={selectedView || viewObject?.label}
+                onValueChange={(value) => handleSelect(value)}
+            >
+                <SelectTrigger
+                    onClick={() => handleOpenChange(true)}
+                    className="w-[180px]"
+                >
                     <SelectValue/>
                 </SelectTrigger>
                 {renderViewList()}

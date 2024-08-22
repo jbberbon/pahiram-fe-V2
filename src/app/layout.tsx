@@ -5,7 +5,7 @@ import {GeistSans} from "geist/font/sans";
 
 import {siteConfig} from "@/siteConfig"
 
-import "./globals.css";
+import "../styles/globals.css";
 
 import {ThemeProvider} from "@/providers/themeProvider";
 

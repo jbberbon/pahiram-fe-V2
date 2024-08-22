@@ -6,11 +6,11 @@ import {PanelsTopLeft} from "lucide-react";
 import {cn} from "@/lib/utils";
 import {useStore} from "@/hooks/useStore";
 import {Button} from "@/components/ui/button";
-import {Menu} from "@/components/admin-panel/menu";
+import {Menu} from "@/components/panel/menu";
 import {useSidebarToggle} from "@/hooks/useSidebarToggle";
-import {SidebarToggle} from "@/components/admin-panel/sidebar-toggle";
+import {SidebarToggle} from "@/components/panel/sidebar-toggle";
 import {siteConfig} from "@/siteConfig"
-import {useFirstMenuItem} from "@/lib/menuList";
+import {useFirstMenuItem} from "@/lib/menu-list";
 
 export function Sidebar() {
     const sidebar = useStore(useSidebarToggle, (state) => state);
