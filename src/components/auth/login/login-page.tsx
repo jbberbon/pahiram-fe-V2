@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import { Flex, Heading } from "@radix-ui/themes";
 import { LayoutDashboard } from "lucide-react";
-import LoginForm from "./LoginForm";
+import LoginForm from "./login-form";
 
 export default function LoginPage() {
   return (
@@ -21,7 +21,6 @@ export default function LoginPage() {
           </div>
 
           {/* Form side */}
-          {/*TODO: Use shadcn ui form component and zod*/}
           <div className="flex flex-col justify-center w-full p-8 md:p-12 md:w-1/2">
             <Flex justify="center" align="center" direction="column" gap="3">
               <Flex display="inline-flex" align="center" gap="1">
@@ -38,6 +37,7 @@ export default function LoginPage() {
               </Flex>
               <p className="mb-6 text-sm">APC Equipment Lending System</p>
             </Flex>
+            {/*Login form*/}
             <LoginForm />
             <div className="mt-8 text-center">
               <p className="rt-r-weight-bold text-xs text-gray-500 dark:text-yellow-500">

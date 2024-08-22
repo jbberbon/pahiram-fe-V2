@@ -1,4 +1,4 @@
-import AdminPanelLayout from "@/components/admin-panel/admin-panel-layout";
+import PanelLayout from "@/components/panel/panel-layout";
 import React from "react";
 
 export default function ProtectedLayout({
@@ -9,8 +9,8 @@ export default function ProtectedLayout({
 
 
     return (
-        <AdminPanelLayout>
+        <PanelLayout>
             {children}
-        </AdminPanelLayout>
+        </PanelLayout>
     );
 }

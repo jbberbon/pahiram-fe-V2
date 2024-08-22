@@ -2,11 +2,11 @@
 
 import { cn } from "@/lib/utils";
 import { useStore } from "@/hooks/useStore";
-import { Footer } from "@/components/admin-panel/footer";
-import { Sidebar } from "@/components/admin-panel/sidebar";
+import { Footer } from "@/components/panel/footer";
+import { Sidebar } from "@/components/panel/sidebar";
 import { useSidebarToggle } from "@/hooks/useSidebarToggle";
 
-export default function AdminPanelLayout({
+export default function PanelLayout({
   children
 }: {
   children: React.ReactNode;

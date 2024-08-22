@@ -1,9 +1,15 @@
-// src/stores/userStore.ts
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import GenerateAvatarName from "@/helper/generateAvatarName";
 import { OfficeAcronym, RoleForOffice } from "@/CONSTANTS/OFFICES_CONSTANTS";
 
+/**
+ * UserState is the state of the user
+ *
+ * This is the type of the user state which is used by the userStore
+ *
+ * @typedef {Object} UserState
+ */
 export type UserState = {
   userData: {
     avatarName: string;
@@ -20,6 +26,19 @@ export type UserState = {
   handleSignout: () => void;
 };
 
+/**
+ * The useUserStore hook is used to manage the user state.
+ *
+ * It uses the zustand library to create a store that persists the state of
+ * the user across page reloads.
+ *
+ * The hook returns an object with three properties:
+ * - userData: the user data object
+ * - setUserData: a function to set the user data object
+ * - handleSignout: a function to handle the user signout
+ *
+ * @return {UserState} The user state object
+ */
 export const useUserStore = create<UserState>()(
   persist(
     (set) => ({

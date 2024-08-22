@@ -19,6 +19,7 @@ import {
 import {
     COSUPERVISOR_MENULIST as LENDING_OFFICE_COSUPERVISOR
 } from "@/CONSTANTS/SIDEBAR_CONSTANTS/LENDING_OFFICES/COSUPERVISOR_MENULIST";
+import {ENDORSER_MENULIST as ENDORSER} from "@/CONSTANTS/SIDEBAR_CONSTANTS/ENDORSER_MENULIST";
 
 
 export const siteConfig = {
@@ -35,6 +36,9 @@ export const siteConfig = {
     navItems: [
         {
             BORROW: BORROWER,
+        },
+        {
+            ENDORSER: ENDORSER,
         },
         {
             ADMIN: ADMIN,

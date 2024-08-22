@@ -1,5 +1,5 @@
-import LoginPage from "@/components/LoginPage";
-import {ModeToggle} from "@/components/mode-toggle";
+import LoginPage from "@/components/auth/login/login-page";
+import {ModeToggle} from "@/components/common/mode-toggle";
 
 export default function AuthLoginPage() {
     return (

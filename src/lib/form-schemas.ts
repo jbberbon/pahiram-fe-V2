@@ -8,9 +8,8 @@ export const LoginSchema = z.object({
       message: "Email must end with @apc.edu.ph",
     }),
   password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters long" }),
+    .string(),
   remember: z.boolean().optional(),
 });
 
-export type Login = z.infer<typeof LoginSchema>;
+export type FormSchemas = z.infer<typeof LoginSchema>;

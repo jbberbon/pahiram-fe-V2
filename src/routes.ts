@@ -1,4 +1,4 @@
-import {getFirstMenuItemOffice} from "@/lib/menuList";
+import {getFirstMenuItemOffice} from "@/lib/menu-list";
 import {cookies} from "next/headers";
 import {ADMIN_MENULIST} from "./CONSTANTS/SIDEBAR_CONSTANTS/ADMIN_MENULIST";
 import {BORROW_MENULIST} from "./CONSTANTS/SIDEBAR_CONSTANTS/BORROW_MENULIST";
@@ -22,30 +22,30 @@ export const publicRoutes = ["/", "/auth/new-verification", loginPage];
 
 export const authRoutes = [
     loginPage,
+    "/auth/login/success",
     "/auth/error",
     "/auth/reset",
     "/auth/new-password",
 ];
 
-/**
- * The prefix for api authentication routes
- * Routes that start with this prefix are used for API authentication purposes
- * @type {string}
- */
-
-export const apiAuthPrefix = "/api/auth";
-
-export const DEFAULT_LOGIN_REDIRECT = () => {
-    const cookieHeader = cookies().get('auth');
-    const auth = cookieHeader ? JSON.parse(cookieHeader.value) : null;
-    const {role, departmentCode: departmentCode, email} = auth.user;
-    return getFirstMenuItemOffice(role, departmentCode);
-};
 
 export const supervisorRoutes = ["/manage-office-accounts"];
 export const endorserRoutes = ["/manage-endorsements"];
 
-export const adminDefaultRedirect = ADMIN_MENULIST[0]?.menus[0]?.href;
+/**
+ * Returns the first menu item for the office user.
+ *
+ * @returns {string} The first menu item for the office user.
+ */
+export const OFFICE_FIRST_MENU_ITEM = () => {
+    const cookieHeader = cookies().get('auth');
+    const auth = cookieHeader ? JSON.parse(cookieHeader.value) : null;
+    const {role, departmentCode: departmentCode} = auth.user;
+    return getFirstMenuItemOffice(role, departmentCode);
+};
 
-export const borrowerDefaultRedirect = BORROW_MENULIST[0]?.menus[0]?.href;
+
+export const ADMIN_FIRST_MENU_ITEM = ADMIN_MENULIST[0]?.menus[0]?.href;
+
+export const BORROWER_FIRST_MENU_ITEM = BORROW_MENULIST[0]?.menus[0]?.href;
 
