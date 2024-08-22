@@ -23,7 +23,7 @@ import {useAction} from "next-safe-action/hooks";
 import {logoutUserAction} from "@/core/actions/authentication";
 
 export function UserNav() {
-    const {execute, result, isExecuting} = useAction(logoutUserAction);
+    const {execute, result} = useAction(logoutUserAction);
     const user = useUserStore((state: unknown) => (state as UserState).userData);
     const clearUserStore = useUserStore(
         (state: unknown) => (state as UserState).handleSignout
@@ -32,12 +32,11 @@ export function UserNav() {
 
     const router = useRouter();
 
-    const handleSignout = async () => {
+    const handleSignout = () => {
         execute();
         if (result) {
             clearUserStore();
             router.replace("/auth");
-            return;
         }
         // TODO: Handle error of logout (toaster)
     };

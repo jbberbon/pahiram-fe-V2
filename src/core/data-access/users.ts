@@ -1,9 +1,8 @@
 import {LoginInput} from "@/lib/interfaces";
-import {cookies} from "next/headers";
 import {deleteAuthCookie, setAuthCookie} from "@/core/data-access/cookies";
 
 export const logoutUser = async () => {
-   return await deleteAuthCookie();
+    return await deleteAuthCookie();
 }
 
 /**
@@ -13,10 +12,10 @@ export const logoutUser = async () => {
  * @throws An error if there is an issue with the login process.
  */
 export const loginUser = async (input: LoginInput) => {
-    const loginUrl = process.env.PAH_BACKEND + "/login";
+    const loginApi = process.env.PAH_BACKEND + "/login";
     const {email, password, remember} = input;
     try {
-        const response = await fetch(loginUrl, {
+        const response = await fetch(loginApi, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -48,7 +47,7 @@ export const loginUser = async (input: LoginInput) => {
     } catch (error) {
         return {
             success: false,
-            message: "Unable to connect to server.",
+            message: "Unable to connect to server. " + error,
         };
     }
 

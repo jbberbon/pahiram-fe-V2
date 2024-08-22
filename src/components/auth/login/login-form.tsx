@@ -1,9 +1,10 @@
 "use client";
 
+import {useEffect} from "react";
+
 import {Input} from "@/components/ui/input";
 import {Checkbox} from "@/components/ui/checkbox";
 import {Button} from "@/components/ui/button";
-import {useEffect} from "react";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 
@@ -34,13 +35,17 @@ export default function LoginForm() {
     // TODO: Add loading spinner
 
     useEffect(() => {
+        if (result?.data && "success" in result.data === false && "message" in result.data) {
+            const message = result.data.message;
+            console.error(message);
+        }
         if (result?.data && "userData" in result.data) {
             setUserData(result.data.userData);
             router.replace("/auth/login");
         }
-    }, [result]);
+    }, [result, router, setUserData]);
 
-    async function onSubmit() {
+    function onSubmit() {
         // execute({
         //     email: "",
         //     password: "",

@@ -4,7 +4,7 @@ import {flattenValidationErrors} from "next-safe-action";
 import {LoginSchema} from "@/lib/form-schemas";
 import {actionClient} from "@/lib/safe-action";
 import {loginUserUseCase} from "@/core/use-cases/users";
-import {logoutUser} from "@/core/data-access/users";
+import {cookies} from "next/headers";
 
 // TODO: Implement zsa
 /**
@@ -28,9 +28,9 @@ export const loginUserAction = actionClient
                }) => {
             return await loginUserUseCase({email, password, remember});
         }
-
     );
 
 export const logoutUserAction = actionClient.action(async () => {
-    return await logoutUser();
+    const isDeleted = cookies().delete("auth");
+    return !!isDeleted;
 });

@@ -145,7 +145,7 @@ export const authMiddleware = async ({request}: MiddlewareFunctionProps) => {
     }
 
     if (!isAuthenticated && !isPublicRoute) {
-        return NextResponse.redirect(new URL(loginPage, nextUrl));
+        return NextResponse.redirect(new URL("/auth/login", nextUrl));
     }
 
     return NextResponse.next();

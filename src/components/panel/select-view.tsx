@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/select";
 import {filterViewsList, findViewsListElement, VIEWS_LIST,} from "@/CONSTANTS/VIEWS_LIST";
 import {useRouter} from "next/navigation";
-import getBaseUrlPath from "@/helper/getBaseUrlPath";
+import useBaseUrlPath from "@/hooks/useBaseUrlPath";
 import {getUserFromAuthCookie} from "@/core/data-access/cookies";
 
 export function SelectView() {
@@ -30,7 +30,7 @@ export function SelectView() {
 
     const router = useRouter();
 
-    const currentUrlView = getBaseUrlPath();
+    const currentUrlView = useBaseUrlPath();
 
     const viewObject = findViewsListElement(currentUrlView);
 

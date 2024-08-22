@@ -7,7 +7,7 @@
 import {siteConfig} from "@/siteConfig";
 import {LucideIcon} from "lucide-react";
 import {UserState, useUserStore} from "@/hooks/useUser";
-import getBaseUrlPath from "@/helper/getBaseUrlPath";
+import useBaseUrlPath from "@/hooks/useBaseUrlPath";
 import {findViewsListElement} from "@/CONSTANTS/VIEWS_LIST";
 
 /**
@@ -100,7 +100,7 @@ export function useMenuList(pathname: string): Group[] {
     const {role, office, email} = useUserStore((state: unknown) => (state as UserState).userData);
     const officeNavItems = getRoleBasedNavItemsOffice(office?.toString(), role);
 
-    const baseUrlPath = getBaseUrlPath();
+    const baseUrlPath = useBaseUrlPath();
     const viewObject = findViewsListElement(baseUrlPath);
 
     const [emailLocalPart, emailDomain] = email.split('@');

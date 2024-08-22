@@ -10,9 +10,6 @@ import {Button} from "@/components/ui/button";
 import {ScrollArea} from "@/components/ui/scroll-area";
 import {CollapseMenuButton} from "@/components/panel/collapse-menu-button";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,} from "@/components/ui/tooltip";
-import {UserState, useUserStore} from "@/hooks/useUser";
-import {useAction} from "next-safe-action/hooks";
-import {logoutUserAction} from "@/core/actions/authentication";
 
 interface MenuProps {
     isOpen: boolean | undefined;
@@ -22,24 +19,12 @@ export function Menu({isOpen}: MenuProps) {
     const pathname = usePathname();
     const menuList = useMenuList(pathname);
 
-    const {execute, result, isExecuting} = useAction(logoutUserAction);
-
-    const clearUserStore = useUserStore(
-        (state: unknown) => (state as UserState).handleSignout
-    );
 
     const router = useRouter();
 
-    const handleSignout = async () => {
-        execute();
-        if (result) {
-            clearUserStore();
-            router.replace("/auth");
-            return;
-        }
-        // TODO: Handle error of logout (toaster)
+    const goToLogoutPage = () => {
+        router.replace("/logout");
     };
-
 
     return (
         <ScrollArea className="[&>div>div[style]]:!block">
@@ -51,7 +36,7 @@ export function Menu({isOpen}: MenuProps) {
                                 <p className="text-sm font-medium text-muted-foreground px-4 pb-2 max-w-[248px] truncate">
                                     {groupLabel}
                                 </p>
-                            ) : !isOpen && isOpen !== undefined && groupLabel ? (
+                            ) : !isOpen && true && groupLabel ? (
                                 <TooltipProvider>
                                     <Tooltip delayDuration={100}>
                                         <TooltipTrigger className="w-full">
@@ -128,7 +113,7 @@ export function Menu({isOpen}: MenuProps) {
                                         // TODO: Replace with loading animation
 
                                         onClick={() => {
-                                            handleSignout();
+                                            goToLogoutPage();
                                         }}
                                         variant="outline"
                                         className="w-full justify-center h-10 mt-5"
