@@ -15,7 +15,7 @@ const config: Config = {
     moduleNameMapper: {
         "^@/(.*)$": "./src/$1"
     },
-    setupFilesAfterEnv: ['./jest.setup.ts']
+    setupFilesAfterEnv: ['./jest.setup.ts'],
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
