@@ -5,7 +5,6 @@ import Link from "next/link";
 import {Flex, Heading} from "@radix-ui/themes";
 import {LayoutDashboard} from "lucide-react";
 import LoginForm from "./login-form";
-import Image from "next/image";
 
 export default function LoginPage() {
     return (
@@ -14,11 +13,10 @@ export default function LoginPage() {
                 <Card className="flex flex-col md:flex-row rounded-lg shadow-lg md:h-auto lg:h-[600px] md:w-full">
                     {/* Image side */}
                     <div className="hidden md:block w-full h-48 md:w-1/2 md:h-auto">
-                        <Image
+                        <img
                             src="/login-image-ram.jpg"
                             alt="APC Logo"
-                            width={600}
-                            height={600}
+                            className="object-cover w-full h-full rounded-t-lg md:rounded-l-lg md:rounded-t-none"
                         />
                     </div>
 

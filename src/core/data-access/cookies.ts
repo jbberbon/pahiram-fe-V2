@@ -24,7 +24,7 @@ export const getParsedAuthCookie = async (): Promise<AuthCookie | undefined> => 
  */
 export const setAuthCookie = async (loginOutput: LoginOutput): Promise<boolean> => {
     const authCookie = JSON.stringify({
-        ...loginOutput?.data?.user,
+        ...loginOutput?.data,
         isAuthenticated: "true",
     });
     const isAuthCookieSet = cookies().set("auth", authCookie, {

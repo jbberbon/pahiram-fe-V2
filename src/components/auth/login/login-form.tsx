@@ -44,6 +44,8 @@ export default function LoginForm() {
         const userData = data?.data?.user;
         const success = data?.success;
 
+        console.log("data => ", data);
+
         if (!success && message) {
             if (errors) {
                 const errorArray = Object.values(errors as Record<string, string>);
@@ -55,6 +57,7 @@ export default function LoginForm() {
 
         if (userData) {
             setUserData(userData);
+            setError("");
             router.replace("/auth/login");
         }
     }, [result, router, setUserData, setError]);
@@ -66,6 +69,7 @@ export default function LoginForm() {
         //     remember_me: null
         // })
         execute(form.getValues());
+
         form.reset(form.getValues());
     }
 
@@ -135,8 +139,9 @@ export default function LoginForm() {
                     className="h-[40px] w-full bg-button text-gray-100"
                     disabled={isExecuting}
                 >
-                    {isExecuting ? "Loading..." : "Sign in"}
+                    {isExecuting ? "Signing you in..." : "Sign in"}
                 </Button>
+                {/*TODO: Make a terms and condition page*/}
                 <FormDescription className="text-center">
                     Upon signing in you accept the terms and conditions.
                 </FormDescription>
