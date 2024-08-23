@@ -3,7 +3,7 @@ import '@radix-ui/themes/styles.css';
 
 import {GeistSans} from "geist/font/sans";
 
-import {siteConfig} from "@/siteConfig"
+import {siteConfig} from "@/config/siteConfig"
 
 import "../styles/globals.css";
 

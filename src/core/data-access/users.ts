@@ -1,7 +1,4 @@
 import {LoginInput, LoginOutput} from "@/lib/interfaces";
-import {setAuthCookie} from "@/core/data-access/cookies";
-
-const apiUrl = process.env.PAH_BACKEND;
 
 export const getUserByEmail = async (email: string) => {
 //  TODO: Call the get user by email api and pass the email
@@ -19,7 +16,8 @@ export const logoutUser = async () => {
  */
 export const loginUser = async (input: LoginInput): Promise<LoginOutput> => {
     const {email, password, remember} = input;
-    const loginApi = apiUrl + "/login";
+    const loginApi = "http://127.0.0.1/api" + "/login";
+
     try {
         const response = await fetch(loginApi, {
             method: "POST",
@@ -33,33 +31,17 @@ export const loginUser = async (input: LoginInput): Promise<LoginOutput> => {
             }),
         });
 
-        if (response.status !== 200) {
-            const errorData = await response.json();
-            const errorMessage = errorData.message ?? "Unknown error";
-
-            if (errorData.errors) {
-                return {success: false, message: errorData.errors};
-            }
-
-            return {success: false, message: errorMessage};
-        }
-
-        // Parse the JSON body
         const loginApiResponseJson = await response.json();
 
-        // Handle the successful response here
-        const isSetSuccessful = await setAuthCookie(loginApiResponseJson);
-
-        if (!isSetSuccessful) {
-            return {
-                success: false,
-                message: "There was an error on our end. Please try again later. "
-            }
+        if (response.status !== 200) {
+            return {success: false, message: loginApiResponseJson?.message, errors: loginApiResponseJson?.errors};
         }
+
+
 
         return {
             success: true,
-            userData: {...loginApiResponseJson?.data?.user},
+            data: {...loginApiResponseJson?.data},
             message: "User logged in successfully! 🎉",
         };
 
@@ -68,7 +50,7 @@ export const loginUser = async (input: LoginInput): Promise<LoginOutput> => {
         console.error(error);
         return {
             success: false,
-            message: "Unable to connect to server. "
+            message: error instanceof Error ? error.message : "There was an error on our end. Please try again later. "
         };
     }
 

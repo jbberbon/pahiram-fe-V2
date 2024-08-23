@@ -40,12 +40,13 @@ export default function LoginForm() {
     useEffect(() => {
         const data = result?.data;
         const message = data?.message;
-        const userData = data?.userData;
+        const errors = data?.errors;
+        const userData = data?.data?.user;
         const success = data?.success;
 
         if (!success && message) {
-            if (typeof message === "object") {
-                const errorArray = Object.values(message as Record<string, string>);
+            if (errors) {
+                const errorArray = Object.values(errors as Record<string, string>);
                 setError(errorArray);
                 return;
             }

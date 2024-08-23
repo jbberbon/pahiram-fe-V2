@@ -1,7 +1,7 @@
 "use server";
 
 import {cookies} from "next/headers";
-import {AuthCookie, LoginApiResponse, UserFromCookie} from "@/lib/interfaces";
+import {AuthCookie, LoginApiResponse, LoginOutput, UserFromCookie} from "@/lib/interfaces";
 
 const auth = "auth";
 
@@ -19,12 +19,12 @@ export const getParsedAuthCookie = async (): Promise<AuthCookie | undefined> => 
 /**
  * Sets the authentication cookie with the provided login data.
  *
- * @param {LoginApiResponse} loginApiResponseJson - The login data from the API response.
+ * @param {LoginApiResponse} loginOutput - The login data from the API response.
  * @return {Promise<void>} - A Promise that resolves when the cookie is successfully set.
  */
-export const setAuthCookie = async (loginApiResponseJson: LoginApiResponse): Promise<boolean> => {
+export const setAuthCookie = async (loginOutput: LoginOutput): Promise<boolean> => {
     const authCookie = JSON.stringify({
-        ...loginApiResponseJson?.data,
+        ...loginOutput?.data?.user,
         isAuthenticated: "true",
     });
     const isAuthCookieSet = cookies().set("auth", authCookie, {

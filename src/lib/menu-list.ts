@@ -4,7 +4,7 @@
 
 "use client";
 
-import {siteConfig} from "@/siteConfig";
+import {siteConfig} from "@/config/siteConfig";
 import {LucideIcon} from "lucide-react";
 import {UserState, useUserStore} from "@/hooks/useUser";
 import useBaseUrlPath from "@/hooks/useBaseUrlPath";
