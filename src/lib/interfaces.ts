@@ -1,3 +1,10 @@
+export interface LoginReponseErrorsObject {
+    "errors": {
+        "email": string,
+        "password": string
+    },
+}
+
 export interface AuthCookie {
     user: UserFromCookie,
     isAuthenticated: boolean
@@ -32,7 +39,7 @@ export interface LoginApiResponse {
 export interface LoginOutput {
     success: boolean;
     userData?: UserFromCookie;
-    message: string;
+    message: string | object;
 }
 
 export interface UserFromCookie {

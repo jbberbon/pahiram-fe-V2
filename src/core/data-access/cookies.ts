@@ -22,16 +22,17 @@ export const getParsedAuthCookie = async (): Promise<AuthCookie | undefined> => 
  * @param {LoginApiResponse} loginApiResponseJson - The login data from the API response.
  * @return {Promise<void>} - A Promise that resolves when the cookie is successfully set.
  */
-export const setAuthCookie = async (loginApiResponseJson: LoginApiResponse): Promise<void> => {
+export const setAuthCookie = async (loginApiResponseJson: LoginApiResponse): Promise<boolean> => {
     const authCookie = JSON.stringify({
         ...loginApiResponseJson?.data,
         isAuthenticated: "true",
     });
-    cookies().set("auth", authCookie, {
+    const isAuthCookieSet = cookies().set("auth", authCookie, {
         httpOnly: true,
         secure: false,
         maxAge: 60 * 60 * 24,
     });
+    return !!isAuthCookieSet;
 }
 
 /**

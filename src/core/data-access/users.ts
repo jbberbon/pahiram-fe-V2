@@ -1,8 +1,14 @@
-import {LoginInput} from "@/lib/interfaces";
-import {deleteAuthCookie, setAuthCookie} from "@/core/data-access/cookies";
+import {LoginInput, LoginOutput} from "@/lib/interfaces";
+import {setAuthCookie} from "@/core/data-access/cookies";
+
+const apiUrl = process.env.PAH_BACKEND;
+
+export const getUserByEmail = async (email: string) => {
+//  TODO: Call the get user by email api and pass the email
+}
 
 export const logoutUser = async () => {
-    return await deleteAuthCookie();
+//  TODO: Call the logout api and pass the tokens
 }
 
 /**
@@ -11,9 +17,9 @@ export const logoutUser = async () => {
  * @returns A Promise that resolves when the user is logged in successfully.
  * @throws An error if there is an issue with the login process.
  */
-export const loginUser = async (input: LoginInput) => {
-    const loginApi = process.env.PAH_BACKEND + "/login";
+export const loginUser = async (input: LoginInput): Promise<LoginOutput> => {
     const {email, password, remember} = input;
+    const loginApi = apiUrl + "/login";
     try {
         const response = await fetch(loginApi, {
             method: "POST",
@@ -29,14 +35,27 @@ export const loginUser = async (input: LoginInput) => {
 
         if (response.status !== 200) {
             const errorData = await response.json();
-            return {success: false, message: errorData.message};
+            const errorMessage = errorData.message ?? "Unknown error";
+
+            if (errorData.errors) {
+                return {success: false, message: errorData.errors};
+            }
+
+            return {success: false, message: errorMessage};
         }
 
         // Parse the JSON body
         const loginApiResponseJson = await response.json();
 
         // Handle the successful response here
-        await setAuthCookie(loginApiResponseJson);
+        const isSetSuccessful = await setAuthCookie(loginApiResponseJson);
+
+        if (!isSetSuccessful) {
+            return {
+                success: false,
+                message: "There was an error on our end. Please try again later. "
+            }
+        }
 
         return {
             success: true,
@@ -44,10 +63,12 @@ export const loginUser = async (input: LoginInput) => {
             message: "User logged in successfully! 🎉",
         };
 
-    } catch (error) {
+    } catch
+        (error) {
+        console.error(error);
         return {
             success: false,
-            message: "Unable to connect to server. " + error,
+            message: "Unable to connect to server. "
         };
     }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 import {Input} from "@/components/ui/input";
 import {Checkbox} from "@/components/ui/checkbox";
@@ -16,8 +16,11 @@ import {LoginSchema} from "@/lib/form-schemas";
 import {loginUserAction} from "@/core/actions/authentication";
 import {useRouter} from "next/navigation";
 import {useAction} from "next-safe-action/hooks";
+import {FormError} from "@/components/common/form-error";
 
 export default function LoginForm() {
+    const [error, setError] = useState<string[] | string | Object | undefined>("");
+
     const {execute, result, isExecuting} = useAction(loginUserAction);
 
     const router = useRouter();
@@ -35,15 +38,25 @@ export default function LoginForm() {
     // TODO: Add loading spinner
 
     useEffect(() => {
-        if (result?.data && "success" in result.data === false && "message" in result.data) {
-            const message = result.data.message;
-            console.error(message);
+        const data = result?.data;
+        const message = data?.message;
+        const userData = data?.userData;
+        const success = data?.success;
+
+        if (!success && message) {
+            if (typeof message === "object") {
+                const errorArray = Object.values(message as Record<string, string>);
+                setError(errorArray);
+                return;
+            }
+            setError(message);
         }
-        if (result?.data && "userData" in result.data) {
-            setUserData(result.data.userData);
+
+        if (userData) {
+            setUserData(userData);
             router.replace("/auth/login");
         }
-    }, [result, router, setUserData]);
+    }, [result, router, setUserData, setError]);
 
     function onSubmit() {
         // execute({
@@ -59,6 +72,7 @@ export default function LoginForm() {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <FormField
+                    disabled={isExecuting}
                     control={form.control}
                     name="email"
                     render={({field}) => (
@@ -72,6 +86,7 @@ export default function LoginForm() {
                     )}
                 />
                 <FormField
+                    disabled={isExecuting}
                     control={form.control}
                     name="password"
                     render={({field}) => (
@@ -85,6 +100,7 @@ export default function LoginForm() {
                     )}
                 />
                 <FormField
+                    disabled={isExecuting}
                     control={form.control}
                     name="remember"
                     render={({field}) => (
@@ -101,8 +117,18 @@ export default function LoginForm() {
                         </FormItem>
                     )}
                 />
-                {/* <FormError message={error} />
-                <FormSuccess message={success} /> */}
+                {/*Container for the error and success messages*/}
+                <div className="space-y-2">
+                    {/*Maps the error if its an array then displays the form error*/}
+                    {Array.isArray(error) && error.map((e: string, index: number) => (
+                        <FormError message={e} key={index}/>
+                    ))}
+
+                    {/*Renders the form error if the error has value and is an array*/}
+                    {typeof error === "string" && <FormError message={error}/>}
+
+                </div>
+
                 <Button
                     type="submit"
                     className="h-[40px] w-full bg-button text-gray-100"

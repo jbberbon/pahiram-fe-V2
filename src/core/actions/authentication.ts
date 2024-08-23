@@ -5,6 +5,7 @@ import {LoginSchema} from "@/lib/form-schemas";
 import {actionClient} from "@/lib/safe-action";
 import {loginUserUseCase} from "@/core/use-cases/users";
 import {cookies} from "next/headers";
+import {loginUser} from "@/core/data-access/users";
 
 // TODO: Implement zsa
 /**
@@ -26,7 +27,7 @@ export const loginUserAction = actionClient
         async ({
                    parsedInput: {email, password, remember},
                }) => {
-            return await loginUserUseCase({email, password, remember});
+            return await loginUser({email, password, remember});
         }
     );
 

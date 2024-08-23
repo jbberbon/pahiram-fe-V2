@@ -1,6 +1,10 @@
 import {LoginInput} from "@/lib/interfaces";
 import {loginUser} from "@/core/data-access/users";
 
+export const logoutUserUseCase = async () => {
+    //    TODO: Call the logout api first before deleting the auth cookie
+}
+
 /**
  * Asynchronously logs in a user with the provided login information.
  *
@@ -14,15 +18,10 @@ export const loginUserUseCase = async (input: LoginInput): Promise<object> => {
     // You can also check if the user account meets the security requirements
     // For example, you can check if the password meets the minimum length requirement
 
+    // TODO: Implement this use case
     // Here is a sample implementation
     // const user = await fetchUserByEmail(input.email);
     // if (!user) {
-    //     throw new Error("Invalid email or password");
-    // }
-    // if (!user.isActive) {
-    //     throw new Error("Your account is not active");
-    // }
-    // if (user.password !== hashPassword(input.password)) {
     //     throw new Error("Invalid email or password");
     // }
 
