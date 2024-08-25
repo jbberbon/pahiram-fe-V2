@@ -17,6 +17,7 @@ export default function LogoutPage() {
             clearUserStore();
             router.replace("/auth");
         }
+        console.log("Please try again!")
     }
 
     const redirectBack = () => {

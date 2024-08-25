@@ -45,6 +45,9 @@ export const loginUserAction = actionClient
     );
 
 export const logoutUserAction = actionClient.action(async () => {
-    const isDeleted = cookies().delete("auth");
-    return !!isDeleted;
+    cookies().delete("auth");
+    if (cookies().get("auth")) {
+        return false;
+    }
+    return true;
 });

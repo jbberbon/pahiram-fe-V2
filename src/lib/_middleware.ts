@@ -132,7 +132,6 @@ export const authMiddleware = async ({request}: MiddlewareFunctionProps) => {
 
     if (isAuthRoute) {
         if (isAuthenticated) {
-            console.log("auth middleware -> ", auth)
             if (auth && auth?.user) {
                 const nextUrl = request.nextUrl;
                 if (auth.user.department_code != null) {

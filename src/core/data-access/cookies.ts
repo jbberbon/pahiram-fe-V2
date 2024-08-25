@@ -1,5 +1,5 @@
 "use server";
-
+// TODO: Secure cookie, don't expose user data and tokens on cookie [security risk]
 import {cookies} from "next/headers";
 import {AuthCookie, LoginApiResponse, LoginOutput, UserFromCookie} from "@/lib/interfaces";
 

@@ -53,7 +53,6 @@ export function SelectView() {
         async function fetchUserData() {
             const user = await getUserFromAuthCookie();
             setUserData(user);
-            console.log("User from select view: ", user);
         }
 
         fetchUserData();

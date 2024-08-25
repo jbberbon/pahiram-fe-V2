@@ -111,7 +111,6 @@ export function useMenuList(pathname: string): Group[] {
             const endorserNavItems = getRoleBasedNavItems("ENDORSER");
             return transformNavItems(endorserNavItems, pathname);
         }
-        console.log("Nav Items: ", navItems)
         return transformNavItems(navItems, pathname);
     }
 

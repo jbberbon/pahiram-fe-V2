@@ -44,7 +44,6 @@ export default function LoginForm() {
         const userData = data?.data?.user;
         const success = data?.success;
 
-        console.log("data => ", data);
 
         if (!success && message) {
             if (errors) {
@@ -52,7 +51,7 @@ export default function LoginForm() {
                 setError(errorArray);
                 return;
             }
-            setError(message);
+            setError(message)                   ;
         }
 
         if (userData) {
