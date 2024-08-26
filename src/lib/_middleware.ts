@@ -138,13 +138,13 @@ export const authMiddleware = async ({request}: MiddlewareFunctionProps) => {
                     return NextResponse.redirect(new URL(OFFICE_FIRST_MENU_ITEM(), nextUrl));
                 }
                 return NextResponse.redirect(new URL(BORROWER_FIRST_MENU_ITEM, nextUrl))
-
             }
         }
         return NextResponse.next();
     }
 
     if (!isAuthenticated && !isPublicRoute) {
+        // TODO: Instead of redirecting, this should redirect to an error page
         return NextResponse.redirect(new URL("/auth/login", nextUrl));
     }
 

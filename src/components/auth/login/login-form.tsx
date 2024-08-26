@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 import {Input} from "@/components/ui/input";
 import {Checkbox} from "@/components/ui/checkbox";
@@ -17,11 +17,13 @@ import {loginUserAction} from "@/core/actions/authentication";
 import {useRouter} from "next/navigation";
 import {useAction} from "next-safe-action/hooks";
 import {FormError} from "@/components/common/form-error";
+import {FormSuccess} from "@/components/common/form-success";
 
 export default function LoginForm() {
+    const [success, setSuccess] = useState<string | undefined>("");
     const [error, setError] = useState<string[] | string | Object | undefined>("");
 
-    const {execute, result, isExecuting} = useAction(loginUserAction);
+    const {executeAsync, isExecuting} = useAction(loginUserAction);
 
     const router = useRouter();
 
@@ -35,31 +37,9 @@ export default function LoginForm() {
     });
 
     const {setUserData} = useUserStore();
+
     // TODO: Add loading spinner
 
-    useEffect(() => {
-        const data = result?.data;
-        const message = data?.message;
-        const errors = data?.errors;
-        const userData = data?.data?.user;
-        const success = data?.success;
-
-
-        if (!success && message) {
-            if (errors) {
-                const errorArray = Object.values(errors as Record<string, string>);
-                setError(errorArray);
-                return;
-            }
-            setError(message)                   ;
-        }
-
-        if (userData) {
-            setUserData(userData);
-            setError("");
-            router.replace("/auth/login");
-        }
-    }, [result, router, setUserData, setError]);
 
     function onSubmit() {
         // execute({
@@ -67,7 +47,33 @@ export default function LoginForm() {
         //     password: "",
         //     remember_me: null
         // })
-        execute(form.getValues());
+        executeAsync(form.getValues())
+            .then((result) => {
+                const data = result?.data;
+                const message = data?.message;
+                const errors = data?.errors;
+                const userData = data?.data?.user;
+                const success = data?.success;
+
+                if (!success && message) {
+                    if (errors) {
+                        const errorArray = Object.values(errors as Record<string, string>);
+                        setError(errorArray);
+                        return;
+                    }
+                    setError(message);
+                    return;
+                }
+
+                if (userData) {
+                    setSuccess(message);
+                    setUserData(userData);
+                }
+            })
+            .finally(() => {
+                setError("");
+                router.replace("/auth/login");
+            })
 
         form.reset(form.getValues());
     }
@@ -128,8 +134,10 @@ export default function LoginForm() {
                         <FormError message={e} key={index}/>
                     ))}
 
-                    {/*Renders the form error if the error has value and is an array*/}
+                    {/*Renders the form error if the error has value and is a string*/}
                     {typeof error === "string" && <FormError message={error}/>}
+
+                   <FormSuccess message={success}/>
 
                 </div>
 
@@ -138,7 +146,7 @@ export default function LoginForm() {
                     className="h-[40px] w-full bg-button text-gray-100"
                     disabled={isExecuting}
                 >
-                    {isExecuting ? "Signing you in..." : "Sign in"}
+                    {isExecuting ? "Logging in" : "Log in"}
                 </Button>
                 {/*TODO: Make a terms and condition page*/}
                 <FormDescription className="text-center">

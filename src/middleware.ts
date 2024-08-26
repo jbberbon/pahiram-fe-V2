@@ -1,12 +1,13 @@
 import {createMiddleware} from 'next-easy-middlewares';
 import {
-    protectedAdminRoutesMiddleware,
     adminViewMiddleware,
     authMiddleware,
     borrowViewMiddleware,
-    protectedEndorserRoutesMiddleware,
     officeViewMiddleware,
-    protectedSupervisorRoutesMiddleware, protectedOfficeRoutesMiddleware
+    protectedAdminRoutesMiddleware,
+    protectedEndorserRoutesMiddleware,
+    protectedOfficeRoutesMiddleware,
+    protectedSupervisorRoutesMiddleware
 } from "@/lib/_middleware";
 
 const globalMiddlewares = {
@@ -14,6 +15,8 @@ const globalMiddlewares = {
 }
 
 const middlewares = {
+    "/auth": authMiddleware,
+
     '/admin/*': protectedAdminRoutesMiddleware,
     '/office/*': [protectedOfficeRoutesMiddleware, protectedSupervisorRoutesMiddleware],
     '/borrow/*': protectedEndorserRoutesMiddleware,

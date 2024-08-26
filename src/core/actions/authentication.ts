@@ -45,9 +45,17 @@ export const loginUserAction = actionClient
     );
 
 export const logoutUserAction = actionClient.action(async () => {
-    cookies().delete("auth");
-    if (cookies().get("auth")) {
-        return false;
-    }
-    return true;
+    return new Promise((resolve, reject) => {
+        try {
+            const cookiesToDelete = cookies().getAll();
+            cookiesToDelete.forEach((cookie) => {
+                cookies().delete(cookie.name);
+            });
+            setTimeout(() => {
+                resolve(!cookies().has("auth"));
+            }, 100);
+        } catch (error) {
+            reject(error);
+        }
+    });
 });
