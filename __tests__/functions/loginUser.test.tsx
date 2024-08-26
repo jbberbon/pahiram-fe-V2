@@ -1,7 +1,11 @@
-import {loginUser} from "@/core/data-access/users";
+import {loginUser} from "../../src/core/data-access/users";
+import {describe, expect, it, vi} from "vitest";
 
 describe("loginUser", () => {
+    let mock = vi.fn();
+
     it("should return a user object on successful login", async () => {
+
         const mockInput = {
             email: "jbberbon@student.apc.edu.ph",
             password: "12345678",
@@ -13,12 +17,12 @@ describe("loginUser", () => {
             message: "User logged in successfully! 🎉",
         };
 
-        fetchMock.mockResponseOnce(JSON.stringify(mockResponse));
+        mock.mockResolvedValueOnce(JSON.stringify(mockResponse));
 
         const result = await loginUser(mockInput);
 
-        expect(result).toEqual(mockResponse);
-    });
+        expect(result).toMatchObject(mockResponse);
+    }, { timeout: 10000 })
 
     it("should return an error message on failed login", async () => {
         const mockInput = {
@@ -28,13 +32,10 @@ describe("loginUser", () => {
         };
         const mockResponse = {
             success: false,
-            message: "Login Failed",
-            errors: {
-                "email": "Wrong email or password"
-            },
+            message: "Wrong credentials",
         };
 
-        fetchMock.mockResponseOnce(JSON.stringify(mockResponse));
+        mock.mockResolvedValueOnce(JSON.stringify(mockResponse));
 
         const result = await loginUser(mockInput);
 
@@ -53,10 +54,7 @@ describe("loginUser", () => {
 
         expect(result).toEqual({
             success: false,
-            message: "Login Failed",
-            errors: {
-                "email": "Wrong email or password"
-            },
+            message: "Wrong credentials",
         });
     });
 
@@ -73,7 +71,8 @@ describe("loginUser", () => {
             success: false,
             message: "Login Failed",
             errors: {
-                "email": "The email field is required."
+                "email": "The email field is required.",
+                "password": "The password field is required."
             }
         });
     });

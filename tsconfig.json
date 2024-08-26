@@ -5,6 +5,7 @@
       "node_modules/@testing-library"
     ],
     "types": [
+      "vitest/importMeta",
       "jest",
       "node"
     ],
@@ -37,7 +38,6 @@
     }
   },
   "include": [
-    "./jest.setup.ts",
     "./src/**/**.*",
     "next-env.d.ts",
     "**/*.ts",
