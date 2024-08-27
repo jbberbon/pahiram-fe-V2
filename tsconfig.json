@@ -5,8 +5,6 @@
       "node_modules/@testing-library"
     ],
     "types": [
-      "vitest/importMeta",
-      "jest",
       "node"
     ],
     "lib": [

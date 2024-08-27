@@ -1,4 +1,4 @@
-import {LoginInput, LoginOutput} from "@/lib/interfaces";
+import {ILoginInput, ILoginOutput} from "@/lib/interfaces";
 
 export const getUserByEmail = async (email: string) => {
 //  TODO: Call the get user by email api and pass the email
@@ -14,7 +14,7 @@ export const logoutUser = async () => {
  * @returns A Promise that resolves when the user is logged in successfully.
  * @throws An error if there is an issue with the login process.
  */
-export const loginUser = async (input: LoginInput): Promise<LoginOutput> => {
+export const loginUser = async (input: ILoginInput): Promise<ILoginOutput> => {
     const {email, password, remember} = input;
     const loginApi = "http://127.0.0.1/api" + "/login";
 

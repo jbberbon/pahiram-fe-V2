@@ -1,10 +1,10 @@
 import {ContentLayout} from "@/components/panel/content-layout";
-import PlaceholderContent from "@/components/common/placeholder-content";
+import Content from "@/components/common/content";
 
-export default function AdminPage() {
+export default function Page() {
     return (
         <ContentLayout title="Manage Office Accounts">
-            <PlaceholderContent />
+            <Content />
         </ContentLayout>
     )
 }

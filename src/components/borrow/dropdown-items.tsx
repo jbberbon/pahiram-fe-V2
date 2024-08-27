@@ -9,7 +9,7 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
   import { Button } from "@/components/ui/button"
-  import SearchBar from '@/components/borrow/searchbar'
+  import SearchBar from '@/components/borrow/search-bar'
   
 
 export default function DropdownItems() {
