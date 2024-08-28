@@ -1,19 +1,11 @@
 {
   "compilerOptions": {
-    "typeRoots": [
-      "node_modules/@types",
-      "node_modules/@testing-library"
-    ],
+    "typeRoots": ["node_modules/@types", "node_modules/@testing-library"],
     "types": [
-      "vitest/importMeta",
-      "jest",
+      "vitest", // Use Vitest types instead of Jest
       "node"
     ],
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -32,9 +24,7 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   },
   "include": [
@@ -44,7 +34,5 @@
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
