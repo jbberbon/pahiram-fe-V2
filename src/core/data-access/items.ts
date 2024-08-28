@@ -34,6 +34,7 @@ export const getItemsPagination = async (page: number): Promise<IGetItemsPaginat
     const userPahiramToken = authCookie?.pahiram_token;
     try {
         const response = await fetch(`http://127.0.0.1/api/item-inventory?page=${page}`, {
+            next: {revalidate: 300}, // Cache for 5 minutes
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
