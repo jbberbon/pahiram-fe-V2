@@ -78,6 +78,8 @@ export default function ExploreItemsSection() {
     //     },
     // ]
 
+    const [cacheTimestamp, setCacheTimestamp] = useState<number | null>(null);
+
     const [isFetchingItems, setIsFetchingItems] = useState(false)
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -123,17 +125,49 @@ export default function ExploreItemsSection() {
     useEffect(() => {
         async function loadItems(page: number) {
             setIsFetchingItems(true);
-            const getItemsPaginationApiResponse = await getItemsPaginationUseCase(page)
-            return getItemsPaginationApiResponse?.data;
+
+            // Check if cached data exists and is less than 5 minutes old
+            const cachedData = localStorage.getItem('itemsCache');
+            const cachedTimestamp = localStorage.getItem('itemsCacheTimestamp');
+            if (cachedData && cachedTimestamp) {
+                const parsedData = JSON.parse(cachedData);
+                const parsedTimestamp = parseInt(cachedTimestamp);
+                const currentTime = new Date().getTime();
+
+                // If cache is less than 5 minutes old, use it
+                if (currentTime - parsedTimestamp < 5 * 60 * 1000) {
+                    setCacheTimestamp(parsedTimestamp);
+                    setIsFetchingItems(false);
+                    setItems(parsedData.items);
+                    setCurrentPage(parsedData.current_page);
+                    setTotalPages(parsedData.last_page);
+                    return;
+                }
+            }
+
+            try {
+                const getItemsPaginationApiResponse = await getItemsPaginationUseCase(page);
+                const itemsPaginationData = getItemsPaginationApiResponse?.data;
+
+                setItems(itemsPaginationData.items);
+                setCurrentPage(itemsPaginationData.current_page);
+                setTotalPages(itemsPaginationData.last_page);
+
+                // Update cache
+                localStorage.setItem('itemsCache', JSON.stringify(itemsPaginationData));
+                const newTimestamp = new Date().getTime();
+                localStorage.setItem('itemsCacheTimestamp', newTimestamp.toString());
+                setCacheTimestamp(newTimestamp);
+            } catch (error) {
+                console.error('Error fetching items:', error);
+                // Handle error (e.g., show error message to user)
+            } finally {
+                setIsFetchingItems(false);
+            }
         }
 
-        loadItems(currentPage).then((itemsPaginationData) => {
-            setIsFetchingItems(false);
-            setItems(itemsPaginationData.items);
-            setCurrentPage(itemsPaginationData.current_page);
-            setTotalPages(itemsPaginationData.last_page);
-        });
-    }, [])
+        loadItems(currentPage);
+    }, [currentPage]);
 
     return (
         <>
@@ -167,6 +201,7 @@ export default function ExploreItemsSection() {
                                             onSelect={() => setFilterCategory("")}
                                             className="[&[data-highlighted]]:bg-accent [&[data-highlighted]]:text-accent-foreground"
                                         >
+                                            {/*TODO: Make a categories constant*/}
                                             All Categories
                                         </DropdownMenuItem>
                                         <DropdownMenuSeparator/>
@@ -214,7 +249,7 @@ export default function ExploreItemsSection() {
                                                     {(OFFICES_CONSTANTS[office].acronym) + " | " + (OFFICES_CONSTANTS[office].office)}
                                                 </DropdownMenuItem>
                                             </>
-                                        ))};
+                                        ))}
 
                                     </DropdownMenuContent>
                                 </DropdownMenu>

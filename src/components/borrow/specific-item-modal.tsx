@@ -44,7 +44,7 @@ export default function SpecificItemModal({props}: { props: ISpecificItemModalPr
                 >
                     {modalItem?.in_circulation !== undefined && modalItem.in_circulation > 0
                         ? `${modalItem.in_circulation} in circulation`
-                        : "Out of stock"}
+                        : "Unavailable"}
                 </span>
                             <span className="text-sm text-muted-foreground">{modalItem?.office}</span>
                         </div>

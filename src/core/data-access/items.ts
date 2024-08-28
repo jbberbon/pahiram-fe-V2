@@ -34,7 +34,6 @@ export const getItemsPagination = async (page: number): Promise<IGetItemsPaginat
     const userPahiramToken = authCookie?.pahiram_token;
     try {
         const response = await fetch(`http://127.0.0.1/api/item-inventory?page=${page}`, {
-            next: {revalidate: 300}, // Cache for 5 minutes
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -47,8 +46,7 @@ export const getItemsPagination = async (page: number): Promise<IGetItemsPaginat
             throw new Error(`HTTP error! status: ${response.status}, body: ${errorBody}`);
         }
 
-        const data = await response.json();
-        return data;
+        return await response.json();
     } catch (error) {
         console.error('Error fetching items:', error);
         if (error instanceof Error) {
