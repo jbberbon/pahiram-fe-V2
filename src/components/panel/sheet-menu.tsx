@@ -5,6 +5,7 @@ import {Button} from "@/components/ui/button";
 import {Menu} from "@/components/panel/menu";
 import {Sheet, SheetContent, SheetHeader, SheetTrigger,} from "@/components/ui/sheet";
 import {siteConfig} from "@/config/siteConfig";
+import {useMediaQuery} from "@/hooks/useMediaQuery";
 
 export function SheetMenu() {
   return (

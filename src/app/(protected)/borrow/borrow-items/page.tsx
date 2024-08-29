@@ -1,6 +1,6 @@
 import {ContentLayout} from "@/components/panel/content-layout";
 import Content from "@/components/common/content";
-import ExploreItemsSection from "@/components/borrow/explore-items-section";
+import ItemsContainer from "@/components/borrow/containers/items-container";
 import DynamicBreadcrumbsComponent from '@/components/common/dynamic-breadcrumbs-component';
 
 export default function Page() {
@@ -10,7 +10,7 @@ export default function Page() {
                 activePage="Explore Items"
             />
             <Content>
-                <ExploreItemsSection/>
+                <ItemsContainer/>
             </Content>
         </ContentLayout>
     )

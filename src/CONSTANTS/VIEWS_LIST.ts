@@ -23,7 +23,7 @@ const filterViewsList = (userData: any) => {
         if (!userData.is_admin) {
             filteredViews = filteredViews.filter(view => view.label !== "Admin");
         }
-        if (!userData.department_code) {
+        if (!userData.department) {
             filteredViews = filteredViews.filter(view => view.label === "Borrow");
         }
     }

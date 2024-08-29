@@ -24,7 +24,7 @@ export const protectedOfficeRoutesMiddleware = async ({
         ? new URL(referer)
         : new URL(loginPage, requestUrl);
 
-    if (user?.department_code != null) {
+    if (user?.department != null) {
         return NextResponse.next();
     }
 
@@ -134,7 +134,7 @@ export const authMiddleware = async ({request}: MiddlewareFunctionProps) => {
         if (isAuthenticated) {
             if (auth && auth?.user) {
                 const nextUrl = request.nextUrl;
-                if (auth.user.department_code != null) {
+                if (auth.user.department != null) {
                     return NextResponse.redirect(new URL(OFFICE_FIRST_MENU_ITEM(), nextUrl));
                 }
                 return NextResponse.redirect(new URL(BORROWER_FIRST_MENU_ITEM, nextUrl))
