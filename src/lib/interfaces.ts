@@ -86,7 +86,7 @@ export interface IUserFromCookie {
     first_name: string;
     last_name: string;
     email: string;
-    department_code: string | null;
+    department: string | null;
     role: string;
     acc_status: string;
     is_admin: boolean;

@@ -1,5 +1,5 @@
 import React from "react";
-import ItemCard from "@/components/borrow/item-card";
+import ItemCard from "@/components/borrow/presentational/item-card";
 import {IItem} from "@/lib/interfaces";
 
 export default function ItemsList({

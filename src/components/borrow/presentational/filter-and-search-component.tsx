@@ -24,17 +24,19 @@ interface IFilterAndSearchProps {
     setFilterSearch: (search: string) => void;
 }
 
-export default function FilterAndSearchComponent({
-                                                     showFilters,
-                                                     filterCategory,
-                                                     setFilterCategory,
-                                                     filterOffice,
-                                                     setFilterOffice,
-                                                     sortBy,
-                                                     setSortBy,
-                                                     filterSearch,
-                                                     setFilterSearch
-                                                 }: IFilterAndSearchProps) {
+export default function FilterAndSearchComponent({props}: { props: IFilterAndSearchProps }) {
+
+    const {
+        showFilters,
+        filterCategory,
+        setFilterCategory,
+        filterOffice,
+        setFilterOffice,
+        sortBy,
+        setSortBy,
+        filterSearch,
+        setFilterSearch
+    } = props
 
     const LIST_OF_OFFICES = Object.keys(OFFICES_CONSTANTS);
 
@@ -115,7 +117,7 @@ export default function FilterAndSearchComponent({
                             placeholder="Search items..."
                             value={filterSearch}
                             onChange={(e) => setFilterSearch(e.target.value)}
-                            className="flex-grow"
+                            className="flex-grow min-w-[30dvh]"
                         />
                     </div>
                 </div>

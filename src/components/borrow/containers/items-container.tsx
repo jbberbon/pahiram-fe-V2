@@ -2,12 +2,12 @@
 
 import {useEffect, useRef, useState} from "react"
 import {IItem} from "@/lib/interfaces";
-import ItemCard from "./item-card"
+import ItemCard from "../presentational/item-card"
 import SpecificItemModal from "@/components/borrow/specific-item-modal";
 import {useItemsPagination} from "@/hooks/borrow/useItemsPagination";
 import {useFilteredItems} from "@/hooks/borrow/useFilteredItems";
-import FilterAndSearchComponent from "@/components/borrow/filter-and-search-component";
-import ItemsListSkeleton from "@/components/borrow/items-list-skeleton";
+import FilterAndSearchComponent from "@/components/borrow/presentational/filter-and-search-component";
+import ItemsListSkeleton from "@/components/borrow/presentational/items-list-skeleton";
 
 
 export default function ItemsContainer() {
@@ -23,11 +23,11 @@ export default function ItemsContainer() {
     const [showModal, setShowModal] = useState(false)
     const [modalItem, setModalItem] = useState<IItem>()
 
-
-    const containerRef = useRef<HTMLDivElement>(null);
     const [showFilters, setShowFilters] = useState(true);
 
     const [gridColumns, setGridColumns] = useState(3);
+
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const updateLayout = () => {
@@ -57,17 +57,17 @@ export default function ItemsContainer() {
         <div ref={containerRef} className="w-full">
 
             {/*Filters section*/}
-            <FilterAndSearchComponent
-                showFilters={showFilters}
-                filterCategory={filterCategory}
-                setFilterCategory={setFilterCategory}
-                filterOffice={filterOffice}
-                setFilterOffice={setFilterOffice}
-                sortBy={sortBy}
-                setSortBy={setSortBy}
-                filterSearch={filterSearch}
-                setFilterSearch={setFilterSearch}
-            />
+            <FilterAndSearchComponent props={{
+                showFilters,
+                filterCategory,
+                setFilterCategory,
+                filterOffice,
+                setFilterOffice,
+                sortBy,
+                setSortBy,
+                filterSearch,
+                setFilterSearch
+            }}/>
 
             {/*Items section*/}
             <div className={`grid gap-4 ${

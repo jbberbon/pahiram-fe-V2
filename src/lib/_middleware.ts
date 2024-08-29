@@ -24,7 +24,7 @@ export const protectedOfficeRoutesMiddleware = async ({
         ? new URL(referer)
         : new URL(loginPage, requestUrl);
 
-    if (user?.department_code != null) {
+    if (user?.department != null) {
         return NextResponse.next();
     }
 

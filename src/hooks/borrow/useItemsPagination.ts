@@ -1,6 +1,6 @@
-import { IItem } from "@/lib/interfaces";
-import { useEffect, useState } from "react";
-import { getItemsPaginationUseCase } from "@/core/use-cases/items";
+import {IItem} from "@/lib/interfaces";
+import {useEffect, useState} from "react";
+import {getItemsPaginationUseCase} from "@/core/use-cases/items";
 
 export const useItemsPagination = () => {
     const [items, setItems] = useState<IItem[]>([]);
@@ -11,15 +11,15 @@ export const useItemsPagination = () => {
 
     useEffect(() => {
         async function loadItems(page: number) {
-            setIsFetchingItems(true);
 
             // Check if cached data exists and is less than 5 minutes old
             const cachedData = localStorage.getItem('itemsCache');
+            const cachedTimestamp = localStorage.getItem('itemsCacheTimestamp');
             if (cachedData && cachedTimestamp) {
                 const currentTime = new Date().getTime();
-
+                const cachedTimestampInt = parseInt(cachedTimestamp, 10);
                 // If cache is less than 5 minutes old, use it
-                if (currentTime - cachedTimestamp < 5 * 60 * 1000) {
+                if (currentTime - cachedTimestampInt < 5 * 60 * 1000) {
                     const parsedData = JSON.parse(cachedData);
                     setItems(parsedData.items);
                     setCurrentPage(parsedData.current_page);
@@ -30,6 +30,7 @@ export const useItemsPagination = () => {
             }
 
             try {
+                setIsFetchingItems(true);
                 const getItemsPaginationApiResponse = await getItemsPaginationUseCase(page);
                 const itemsPaginationData = getItemsPaginationApiResponse?.data;
 
