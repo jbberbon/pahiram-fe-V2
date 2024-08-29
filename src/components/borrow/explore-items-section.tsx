@@ -117,7 +117,8 @@ export default function ExploreItemsSection() {
     const handleBorrowingPeriodChange = (value: any) => {
         setBorrowingPeriod(value)
     }
-    const isDesktop = useMediaQuery("(min-width: 768px)");
+
+    const isMedium = useMediaQuery("(min-width: 1024px)");
 
     const LIST_OF_OFFICES = Object.keys(OFFICES_CONSTANTS);
 
@@ -170,13 +171,15 @@ export default function ExploreItemsSection() {
     }, [currentPage]);
 
     return (
+        // TODO: Session management because the bearer token somehow expires and the fetching of items doesn't work.
+        //  Implement that in the use case of fetch items
         <>
             <div className="w-full">
                 {/*Header section*/}
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center justify-between mb-6 px-2">
                     {/*Filters*/}
                     <div className="flex items-center gap-4">
-                        {isDesktop ?
+                        {isMedium ?
                             <>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
@@ -260,7 +263,7 @@ export default function ExploreItemsSection() {
                     </div>
                     {/*Search items*/}
                     <div className="flex items-center gap-2 flex-wrap">
-                        {isDesktop ?
+                        {isMedium ?
                             <>
                                 <Search className="h-5 w-5 text-muted-foreground"/>
                                 <Input
@@ -280,7 +283,7 @@ export default function ExploreItemsSection() {
 
                 {/*Items section*/}
                 {isFetchingItems ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {[...Array(6)].map((_, index) => (
                             <div key={index} className="bg-background rounded-lg border shadow-sm overflow-hidden">
                                 <Skeleton className="w-full h-48"/>
@@ -297,7 +300,7 @@ export default function ExploreItemsSection() {
                         ))}
                     </div>
                 ) : filteredItems && filteredItems.length > 0 ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {filteredItems.map((item) => (
                             <ItemCard key={item.id} props={{item, setShowModal, setModalItem}}/>
                         ))}
