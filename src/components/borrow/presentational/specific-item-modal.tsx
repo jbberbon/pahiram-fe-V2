@@ -15,6 +15,7 @@ interface ISpecificItemModalProps {
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
     modalItem: IItem | undefined;
 }
+// TODO: Implement URL reading instead of useState
 
 export default function SpecificItemModal({props}: { props: ISpecificItemModalProps }) {
     const {showModal, setShowModal, modalItem} = props;

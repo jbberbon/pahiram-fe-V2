@@ -10,7 +10,7 @@ export default function Page() {
                 activePage="Explore Items"
             />
             <Content>
-                <ItemsContainer/>
+                <ItemsContainer />
             </Content>
         </ContentLayout>
     )

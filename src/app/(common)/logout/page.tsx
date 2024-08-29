@@ -8,16 +8,24 @@ import {Button} from "@/components/ui/button";
 import {LayoutDashboard} from "lucide-react";
 import {Heading} from "@radix-ui/themes";
 import {LoadingComponent} from "@/components/common/loading-component";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function LogoutPage() {
     const [isRedirecting, setIsRedirecting] = useState(false);
-
+    const [lastPath, setLastPath] = useState("/");
     const {executeAsync} = useAction(logoutUserAction);
     const clearUserStore = useUserStore(
         (state: unknown) => (state as UserState).handleSignout
     );
     const router = useRouter();
+
+    useEffect(() => {
+        const storedPath = sessionStorage.getItem('lastPath');
+        if (storedPath) {
+            setLastPath(storedPath);
+        }
+    }, []);
+
 
     const handleSignout = () => {
         setIsRedirecting(true);
@@ -32,10 +40,11 @@ export default function LogoutPage() {
             });
     }
 
-
     const redirectBack = () => {
-        router.push('/auth/login')
+        // Use the stored path, or fallback to login page if not available
+        router.push(lastPath || "/auth/login");
     }
+
 
     return (
         <>
