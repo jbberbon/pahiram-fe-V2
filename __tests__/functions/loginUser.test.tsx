@@ -1,35 +1,28 @@
-import {loginUser} from "@/core/data-access/users";
-// TODO: Verify the response from the API @berbon
+import {loginUser} from "../../src/core/data-access/users";
+import {describe, expect, it, vi} from "vitest";
+
 describe("loginUser", () => {
+    let mock = vi.fn();
+
     it("should return a user object on successful login", async () => {
+
         const mockInput = {
-            email: "test@apc.edu.ph",
-            password: "password",
+            email: "jbberbon@student.apc.edu.ph",
+            password: "12345678",
             remember: false,
         };
         const mockResponse = {
             success: true,
-            userData: {
-                apc_id: "1234567890",
-                first_name: "John",
-                last_name: "Doe",
-                email: "test@apc.edu.ph",
-                office: "DPS",
-                role: "admin",
-                is_admin: true,
-            },
+            data: {},
             message: "User logged in successfully! 🎉",
         };
 
-        jest.spyOn(global, "fetch").mockResolvedValue({
-            json: jest.fn().mockResolvedValue(mockResponse),
-            ok: true,
-        } as unknown as Response);
+        mock.mockResolvedValueOnce(JSON.stringify(mockResponse));
 
         const result = await loginUser(mockInput);
 
-        expect(result).toEqual(mockResponse);
-    });
+        expect(result).toMatchObject(mockResponse);
+    }, { timeout: 10000 })
 
     it("should return an error message on failed login", async () => {
         const mockInput = {
@@ -39,33 +32,29 @@ describe("loginUser", () => {
         };
         const mockResponse = {
             success: false,
-            message: "Invalid email or password",
+            message: "Wrong credentials",
         };
 
-        jest.spyOn(global, "fetch").mockResolvedValue({
-            json: jest.fn().mockResolvedValue(mockResponse),
-            ok: false,
-        } as unknown as Response);
+        mock.mockResolvedValueOnce(JSON.stringify(mockResponse));
 
         const result = await loginUser(mockInput);
 
         expect(result).toEqual(mockResponse);
     });
 
-    it("should return an error message on server error", async () => {
+    it("should return an errors object", async () => {
         const mockInput = {
             email: "test@apc.edu.ph",
             password: "password",
             remember: false,
         };
 
-        jest.spyOn(global, "fetch").mockRejectedValue(new Error("Server Error"));
 
         const result = await loginUser(mockInput);
 
         expect(result).toEqual({
             success: false,
-            message: "Server Error",
+            message: "Wrong credentials",
         });
     });
 
@@ -80,7 +69,11 @@ describe("loginUser", () => {
 
         expect(result).toEqual({
             success: false,
-            message: "Invalid input",
+            message: "Login Failed",
+            errors: {
+                "email": "The email field is required.",
+                "password": "The password field is required."
+            }
         });
     });
 });

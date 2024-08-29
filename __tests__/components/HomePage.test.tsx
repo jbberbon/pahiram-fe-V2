@@ -1,19 +1,22 @@
 import {fireEvent, render, screen} from '@testing-library/react';
-import HomePage from '@/app/page';
+import {describe, expect, it} from "vitest";
+import HomePage from '../../src/app/page';
 
 describe('HomePage - Component Test', () => {
     it('should render a link to the login page', () => {
         render(<HomePage/>)
 
-        expect(screen.getByRole('link', {name: 'Login'})).toBeInTheDocument()
+        const linkElement = screen.getAllByRole('link', {name: 'Login'})
+        expect(document).toContain(linkElement[0]);
     })
 
     it('should redirect to the login form', () => {
-        const {getByRole, getByText} = render(<HomePage/>)
-        const linkElement = getByRole('link', {name: 'Login'})
-        expect(linkElement).toBeInTheDocument()
-        expect(linkElement).toHaveAttribute('href', '/auth/login')
-        fireEvent.click(linkElement)
-        expect(getByText('Login')).toBeInTheDocument()
+        const {getAllByRole, getAllByText} = render(<HomePage/>)
+        const linkElement = getAllByRole('link', {name: 'Login'})
+        expect(document).toContain(linkElement[0]);
+        expect(linkElement[0]).toHaveProperty('href', 'http://localhost:3000/auth/login')
+        fireEvent.click(linkElement[0])
+        const titleElement = getAllByText('Login')
+        expect(document).toContain(titleElement[0]);
     })
 })

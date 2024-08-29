@@ -19,26 +19,15 @@ import {
 // import {useUser} from "@/hooks/use-user";
 import {UserState, useUserStore} from "@/hooks/useUser";
 import {useRouter} from "next/navigation";
-import {useAction} from "next-safe-action/hooks";
-import {logoutUserAction} from "@/core/actions/authentication";
 
 export function UserNav() {
-    const {execute, result} = useAction(logoutUserAction);
     const user = useUserStore((state: unknown) => (state as UserState).userData);
-    const clearUserStore = useUserStore(
-        (state: unknown) => (state as UserState).handleSignout
-    );
 
 
     const router = useRouter();
 
-    const handleSignout = () => {
-        execute();
-        if (result) {
-            clearUserStore();
-            router.replace("/auth");
-        }
-        // TODO: Handle error of logout (toaster)
+    const goToLogoutPage = () => {
+        router.replace("/logout");
     };
 
 
@@ -94,8 +83,8 @@ export function UserNav() {
                 <DropdownMenuSeparator/>
                 <DropdownMenuItem
                     className="hover:cursor-pointer"
-                    onClick={async () => {
-                        await handleSignout();
+                    onClick={() => {
+                        goToLogoutPage();
                     }}
                 >
                     <LogOut className="w-4 h-4 mr-3 text-muted-foreground"/>

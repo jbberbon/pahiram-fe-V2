@@ -6,6 +6,7 @@ import {actionClient} from "@/lib/safe-action";
 import {loginUserUseCase} from "@/core/use-cases/users";
 import {cookies} from "next/headers";
 import {loginUser} from "@/core/data-access/users";
+import {setAuthCookie} from "@/core/data-access/cookies";
 
 // TODO: Implement zsa
 /**
@@ -27,11 +28,34 @@ export const loginUserAction = actionClient
         async ({
                    parsedInput: {email, password, remember},
                }) => {
-            return await loginUser({email, password, remember});
+            const response = await loginUser({email, password, remember});
+
+            // Handle the successful response here
+            const isSetSuccessful = await setAuthCookie(response);
+
+            if (!isSetSuccessful) {
+                return {
+                    success: false,
+                    message: "There was an error on our end. Please try again later. "
+                }
+            }
+
+            return response;
         }
     );
 
 export const logoutUserAction = actionClient.action(async () => {
-    const isDeleted = cookies().delete("auth");
-    return !!isDeleted;
+    return new Promise((resolve, reject) => {
+        try {
+            const cookiesToDelete = cookies().getAll();
+            cookiesToDelete.forEach((cookie) => {
+                cookies().delete(cookie.name);
+            });
+            setTimeout(() => {
+                resolve(!cookies().has("auth"));
+            }, 100);
+        } catch (error) {
+            reject(error);
+        }
+    });
 });

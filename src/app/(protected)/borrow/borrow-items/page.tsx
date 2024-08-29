@@ -1,10 +1,17 @@
 import {ContentLayout} from "@/components/panel/content-layout";
-import PlaceholderContent from "@/components/common/placeholder-content";
+import Content from "@/components/common/content";
+import ExploreItemsSection from "@/components/borrow/explore-items-section";
+import DynamicBreadcrumbsComponent from '@/components/common/dynamic-breadcrumbs-component';
 
-export default function AdminPage() {
+export default function Page() {
     return (
         <ContentLayout title="Borrow Items">
-            <PlaceholderContent />
+            <DynamicBreadcrumbsComponent
+                activePage="Explore Items"
+            />
+            <Content>
+                <ExploreItemsSection/>
+            </Content>
         </ContentLayout>
     )
 }

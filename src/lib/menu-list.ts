@@ -4,7 +4,7 @@
 
 "use client";
 
-import {siteConfig} from "@/siteConfig";
+import {siteConfig} from "@/config/siteConfig";
 import {LucideIcon} from "lucide-react";
 import {UserState, useUserStore} from "@/hooks/useUser";
 import useBaseUrlPath from "@/hooks/useBaseUrlPath";
@@ -111,7 +111,6 @@ export function useMenuList(pathname: string): Group[] {
             const endorserNavItems = getRoleBasedNavItems("ENDORSER");
             return transformNavItems(endorserNavItems, pathname);
         }
-        console.log("Nav Items: ", navItems)
         return transformNavItems(navItems, pathname);
     }
 
