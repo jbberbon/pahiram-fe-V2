@@ -39,7 +39,7 @@ export default function ItemCard({props}: { props: IItemCardProps }) {
                 </p>
                 <CardDescription className="text-xs">
                     <div className="flex items-center justify-between mb-2">
-                        <span>{item.office || 'No office'}</span>
+                        <span>{item.category || 'No category'}</span>
                         {item.in_circulation ? (
                             <span
                                 className="text-green-600 bg-green-100 px-2 py-1 rounded-full">{`${item.in_circulation} in circulation`}</span>
@@ -47,7 +47,7 @@ export default function ItemCard({props}: { props: IItemCardProps }) {
                             <span className="text-red-600 bg-red-100 px-2 py-1 rounded-full">Unavailable</span>
                         )}
                     </div>
-                    <span>{item.category || 'No category'}</span>
+                    <span>{item.office || 'No office'}</span>
                 </CardDescription>
             </CardContent>
             <CardFooter className="pt-2">

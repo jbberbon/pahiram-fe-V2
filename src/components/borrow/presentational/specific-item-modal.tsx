@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Dialog, DialogContent, DialogFooter, DialogTitle} from "@/components/ui/dialog";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
@@ -18,6 +18,24 @@ export default function SpecificItemModal({props}: { props: ISpecificItemModalPr
     const {showModal, setShowModal, modalItem} = props;
     const [startDate, setStartDate] = useState<Date | undefined>(undefined);
     const [returnDate, setReturnDate] = useState<Date | undefined>(undefined);
+
+    const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+    const [shouldTruncate, setShouldTruncate] = useState(false);
+
+    useEffect(() => {
+        if (modalItem?.description) {
+            setShouldTruncate(modalItem.description.length > 150);
+        }
+    }, [modalItem]);
+
+    const toggleDescription = () => {
+        setIsDescriptionExpanded(!isDescriptionExpanded);
+    };
+
+    const truncateDescription = (text: string, maxLength: number) => {
+        if (text.length <= maxLength) return text;
+        return text.substr(0, maxLength) + '...';
+    };
 
     return (
         <Dialog open={showModal} onOpenChange={setShowModal}>
@@ -49,8 +67,17 @@ export default function SpecificItemModal({props}: { props: ISpecificItemModalPr
                                     className="text-sm text-muted-foreground">{modalItem?.office || "No designated office"}</span>
                             </div>
                         </div>
-                        <div className="max-h-[200px] overflow-y-auto">
-                            <p className="text-muted-foreground">{modalItem?.description || "No description available."}</p>
+                        <div className="max-h-[130px] overflow-y-auto space-y-2">
+                            <p className="text-muted-foreground">
+                                {shouldTruncate && !isDescriptionExpanded
+                                    ? truncateDescription(modalItem?.description || "No description available.", 150)
+                                    : modalItem?.description || "No description available."}
+                            </p>
+                            {shouldTruncate && (
+                                <Button variant="link" onClick={toggleDescription} className="p-0">
+                                    {isDescriptionExpanded ? "See less" : "See more"}
+                                </Button>
+                            )}
                         </div>
                     </div>
 
