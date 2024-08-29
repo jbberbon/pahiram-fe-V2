@@ -67,11 +67,11 @@ export default function LoginForm() {
 
                 if (userData) {
                     setSuccess(message);
+                    setError("");
                     setUserData(userData);
                 }
             })
             .finally(() => {
-                setError("");
                 router.replace("/auth/login");
             })
 
@@ -128,18 +128,21 @@ export default function LoginForm() {
                     )}
                 />
                 {/*Container for the error and success messages*/}
-                <div className="space-y-2">
-                    {/*Maps the error if its an array then displays the form error*/}
-                    {Array.isArray(error) && error.map((e: string, index: number) => (
-                        <FormError message={e} key={index}/>
-                    ))}
+                {success || error ?
+                    <div className="space-y-2">
+                        {/*Maps the error if its an array then displays the form error*/}
+                        {Array.isArray(error) && error.map((e: string, index: number) => (
+                            <FormError message={e} key={index}/>
+                        ))}
 
-                    {/*Renders the form error if the error has value and is a string*/}
-                    {typeof error === "string" && <FormError message={error}/>}
+                        {/*Renders the form error if the error has value and is a string*/}
+                        {typeof error === "string" && <FormError message={error}/>}
 
-                   <FormSuccess message={success}/>
+                        <FormSuccess message={success}/>
 
-                </div>
+                    </div>
+                    : null
+                }
 
                 <Button
                     type="submit"

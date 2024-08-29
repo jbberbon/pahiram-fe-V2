@@ -1,55 +1,53 @@
 import React from 'react';
-import {Card, CardContent, CardDescription, CardFooter, CardHeader,} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader } from "@/components/ui/card";
 import Image from 'next/image';
-import Placeholder from '../../../public/image-placeholder.png'; // This will be used as a fallback image
-import {Button} from '../ui/button';
-import {IItem} from "@/lib/interfaces";
+import Placeholder from '../../../public/image-placeholder.png';
+import { Button } from '../ui/button';
+import { IItem } from "@/lib/interfaces";
 
-interface IItemCardProps {
+export interface IItemCardProps {
     item: IItem
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>
     setModalItem: React.Dispatch<React.SetStateAction<IItem | undefined>>
 }
 
 export default function ItemCard({props}: { props: IItemCardProps }) {
-
     const handleRequestClick = () => {
         props.setShowModal(true);
         props.setModalItem(props.item);
     }
 
     return (
-        <Card className="w-full overflow-hidden">
+        <Card className="w-full h-full flex flex-col">
             <CardHeader className="p-0">
-                <Image
-                    src={props.item.image || Placeholder}
-                    alt={props.item.model_name || 'item'}
-                    className="w-full h-44 rounded-t-lg object-cover"
-                />
+                <div className="relative w-full aspect-[4/3]">
+                    <Image
+                        src={props.item.image || Placeholder}
+                        alt={props.item.model_name || 'item'}
+                        layout="fill"
+                        objectFit="cover"
+                        className="rounded-t-lg"
+                    />
+                </div>
             </CardHeader>
-            <CardContent>
-                <h1 className="text-xl font-bold my-4">{props.item.model_name || 'Item Group (Item Model)'}</h1>
-                <p className="text-neutral-500 mt-2 line-clamp-2">
+            <CardContent className="flex-grow">
+                <h1 className="text-lg font-semibold mt-2 mb-1">{props.item.model_name || 'Item Group (Item Model)'}</h1>
+                <p className="text-sm text-neutral-500 mb-2 line-clamp-2">
                     {props.item.description || 'No description available.'}
                 </p>
-                <CardDescription
-                    className="mt-4 flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0">
-                    {props.item.in_circulation ? (
-                            <span
-                                className="text-green-600 bg-green-100 px-3 py-1 rounded-full whitespace-nowrap">{`{item.in_circulation} in circulation`}</span>
-                        )
-                        :
-                        <span
-                            className="text-red-600 bg-red-100 px-3 py-1 rounded-full whitespace-nowrap">Unavailable</span>}
-
-                    <div
-                        className="flex flex-col md:flex-row space-y-1 sm:space-y-0 sm:space-x-4 items-start sm:items-center flex-wrap">
-                        <span className="whitespace-nowrap ml-4">{props.item.category || 'No category'}</span>
-                        <span className="whitespace-nowrap">{props.item.office || 'No office'}</span>
+                <CardDescription className="text-xs">
+                    <div className="flex items-center justify-between mb-2">
+                        {props.item.in_circulation ? (
+                            <span className="text-green-600 bg-green-100 px-2 py-1 rounded-full">{`${props.item.in_circulation} in circulation`}</span>
+                        ) : (
+                            <span className="text-red-600 bg-red-100 px-2 py-1 rounded-full">Unavailable</span>
+                        )}
+                        <span>{props.item.office || 'No office'}</span>
                     </div>
+                    <span>{props.item.category || 'No category'}</span>
                 </CardDescription>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="pt-2">
                 <Button onClick={handleRequestClick} className='w-full text-black'>Request to Borrow</Button>
             </CardFooter>
         </Card>
