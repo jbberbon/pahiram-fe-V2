@@ -57,25 +57,24 @@ export function SelectView() {
 
         fetchUserData();
     }, []);
+    const filteredViews = filterViewsList(userData);
 
     const renderViewList = () => {
-        const filteredViews = filterViewsList(userData);
-
         return (
-            <SelectContent>
-                <SelectGroup>
-                    <SelectLabel>Views</SelectLabel>
-                    {filteredViews.map((view: any) => (
-                        <SelectItem
-                            key={view.label}
-                            value={view.label}
-                            onSelect={() => handleSelect(view.label)}
-                        >
-                            {view.label}
-                        </SelectItem>
-                    ))}
-                </SelectGroup>
-            </SelectContent>
+                <SelectContent>
+                    <SelectGroup>
+                        <SelectLabel>Views</SelectLabel>
+                        {filteredViews.map((view: any) => (
+                            <SelectItem
+                                key={view.label}
+                                value={view.label}
+                                onSelect={() => handleSelect(view.label)}
+                            >
+                                {view.label}
+                            </SelectItem>
+                        ))}
+                    </SelectGroup>
+                </SelectContent>
         );
     };
 
@@ -106,14 +105,14 @@ export function SelectView() {
             </DrawerTrigger>
             <DrawerContent>
                 <div className="mt-4 border-t p-4">
-                    {Object.keys(VIEWS_LIST).map((view: string) => (
+                    {filteredViews.map((view: any) => (
                         <Button
-                            key={view}
+                            key={view.label}
                             variant="ghost"
                             className="w-full text-left text-lg"
-                            onClick={() => handleSelect(view)}
+                            onClick={() => handleSelect(view.label)}
                         >
-                            {view}
+                            {view.label}
                         </Button>
                     ))}
                 </div>

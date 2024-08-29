@@ -1,4 +1,4 @@
-import PanelLayout from "@/components/panel/panel-layout";
+import PanelLayout from "@/components/panel/containers/panel-layout";
 
 export default function ProtectedLayout({
                                             children,

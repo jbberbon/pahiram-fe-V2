@@ -2,8 +2,8 @@
 
 import { cn } from "@/lib/utils";
 import { useStore } from "@/hooks/useStore";
-import { Footer } from "@/components/panel/footer";
-import { Sidebar } from "@/components/panel/sidebar";
+import { Footer } from "@/components/panel/presentational/footer";
+import { Sidebar } from "@/components/panel/presentational/sidebar";
 import { useSidebarToggle } from "@/hooks/useSidebarToggle";
 
 export default function PanelLayout({

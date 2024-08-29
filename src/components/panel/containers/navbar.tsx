@@ -1,9 +1,9 @@
 import {ModeToggle} from "@/components/common/mode-toggle";
-import {UserNav} from "@/components/panel/user-nav";
-import {SheetMenu} from "@/components/panel/sheet-menu";
-import {SelectView} from "@/components/panel/select-view";
-import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
+import {UserNav} from "@/components/panel/presentational/user-nav";
+import {SheetMenu} from "@/components/panel/presentational/sheet-menu";
 import * as React from "react";
+import BorrowingCartNav from "@/components/borrow/borrowing-cart-nav";
+import SelectViewNav from "@/components/panel/presentational/select-view-nav";
 
 interface NavbarProps {
     title: string;
@@ -20,16 +20,8 @@ export function Navbar({title}: NavbarProps) {
                     <h1 className="font-bold">{title}</h1>
                 </div>
                 <div className="flex flex-1 items-center space-x-2 justify-end">
-                    <TooltipProvider disableHoverableContent>
-                        <Tooltip delayDuration={100}>
-                            <TooltipTrigger asChild>
-                                <div>
-                                    <SelectView/>
-                                </div>
-                            </TooltipTrigger>
-                            <TooltipContent sideOffset={10} side="bottom">Select a view</TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
+                    <BorrowingCartNav/>
+                    <SelectViewNav/>
                     <ModeToggle/>
                     <UserNav/>
                 </div>
