@@ -10,6 +10,7 @@ import {Button} from "@/components/ui/button";
 import {ScrollArea} from "@/components/ui/scroll-area";
 import {CollapseMenuButton} from "@/components/panel/collapse-menu-button";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,} from "@/components/ui/tooltip";
+import {useEffect} from "react";
 
 interface MenuProps {
     isOpen: boolean | undefined;
@@ -18,6 +19,11 @@ interface MenuProps {
 export function Menu({isOpen}: MenuProps) {
     const pathname = usePathname();
     const menuList = useMenuList(pathname);
+
+    useEffect(() => {
+        // Store the current path whenever it changes
+        sessionStorage.setItem('lastPath', pathname);
+    }, [pathname]);
 
 
     const router = useRouter();

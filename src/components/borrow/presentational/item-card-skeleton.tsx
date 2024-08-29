@@ -2,7 +2,7 @@ import React from 'react';
 import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card";
 import {Skeleton} from "@/components/ui/skeleton";
 
-export default function ItemsListSkeleton() {
+export default function ItemCardSkeleton() {
     return (
         <>
             {[...Array(6)].map((_, index) => (

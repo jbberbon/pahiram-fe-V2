@@ -18,13 +18,18 @@ import {
 
 // import {useUser} from "@/hooks/use-user";
 import {UserState, useUserStore} from "@/hooks/useUser";
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
+import {useEffect} from "react";
 
 export function UserNav() {
     const user = useUserStore((state: unknown) => (state as UserState).userData);
-
-
     const router = useRouter();
+    const pathname = usePathname();
+
+    useEffect(() => {
+        // Store the current path whenever it changes
+        sessionStorage.setItem('lastPath', pathname);
+    }, [pathname]);
 
     const goToLogoutPage = () => {
         router.replace("/logout");

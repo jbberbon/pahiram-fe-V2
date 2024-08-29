@@ -5,7 +5,7 @@ import Placeholder from '../../../../public/image-placeholder.png';
 import {Button} from '../../ui/button';
 import {IItem} from "@/lib/interfaces";
 
-export interface IItemCardProps {
+interface IItemCardProps {
     item: IItem
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>
     setModalItem: React.Dispatch<React.SetStateAction<IItem | undefined>>

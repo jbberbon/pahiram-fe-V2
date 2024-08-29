@@ -21,8 +21,16 @@ export const useFilteredItems = ({
         return items
             .filter((item) => {
                 if (filterCategory && item.category !== filterCategory) return false
-                if (filterSearch && !item.model_name.toLowerCase().includes(filterSearch.toLowerCase())) return false
-                return !(filterOffice && item.office !== filterOffice);
+                if (filterOffice && item.office !== filterOffice) return false;
+                if (filterSearch) {
+                    const searchLower = filterSearch.toLowerCase();
+                    return (
+                        item.model_name.toLowerCase().includes(searchLower) ||
+                        (item.category && item.category.toLowerCase().includes(searchLower)) ||
+                        (item.office && item.office.toLowerCase().includes(searchLower))
+                    );
+                }
+                return true;
             })
             .sort((a, b) => {
                 if (sortBy === "name") {
