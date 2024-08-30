@@ -4,16 +4,12 @@ import {IItem} from "@/lib/interfaces";
 
 export default function ItemsList({
                                       items,
-                                      setShowModal,
-                                      setModalItem
                                   }: {
-    items: IItem[],
-    setShowModal: React.Dispatch<React.SetStateAction<boolean>>,
-    setModalItem: React.Dispatch<React.SetStateAction<IItem | undefined>>
+    items: IItem[]
 }) {
     return (
         items.map((item) => (
-            <ItemCard key={item.id} props={{item, setShowModal, setModalItem}}/>
+            <ItemCard key={item.id} props={{item}}/>
         ))
     )
 }

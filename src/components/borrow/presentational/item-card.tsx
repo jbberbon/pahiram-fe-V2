@@ -1,31 +1,38 @@
 import React from 'react';
-import {Card, CardContent, CardDescription, CardFooter, CardHeader} from "@/components/ui/card";
+import {Card, CardContent, CardDescription, CardHeader} from "@/components/ui/card";
 import Image from 'next/image';
-import Placeholder from '../../../../public/image-placeholder.png';
-import {Button} from '../../ui/button';
 import {IItem} from "@/lib/interfaces";
+import {updateURLParams} from "@/helper/borrow/updateURLParams";
+import {useRouter} from "next/navigation";
 
 interface IItemCardProps {
     item: IItem
-    setShowModal: React.Dispatch<React.SetStateAction<boolean>>
-    setModalItem: React.Dispatch<React.SetStateAction<IItem | undefined>>
+    // setShowModal: React.Dispatch<React.SetStateAction<boolean>>
+    // setModalItem: React.Dispatch<React.SetStateAction<IItem | undefined>>
 }
+
 // TODO: Remove scrollbar when opened
 
+
 export default function ItemCard({props}: { props: IItemCardProps }) {
-    const {item, setShowModal, setModalItem} = props;
+    const {item} = props;
+    const router = useRouter();
 
     const handleRequestClick = () => {
-        setShowModal(true);
-        setModalItem(item);
-    }
+        const serializedItem = encodeURIComponent(JSON.stringify(item));
+        const newUrl = updateURLParams({item: serializedItem, showModalItem: 1});
+        router.push(newUrl);
+    };
+
 
     return (
-        <Card className="w-full h-full flex flex-col">
+        <Card onClick={() => {
+            handleRequestClick()
+        }} className="w-full h-full flex flex-col cursor-pointer">
             <CardHeader className="p-0">
                 <div className="relative w-full aspect-[4/3]">
                     <Image
-                        src={item.image || Placeholder}
+                        src={item.image || "/image-placeholder.png"}
                         alt={item.model_name || 'item'}
                         layout="fill"
                         objectFit="cover"
@@ -51,9 +58,6 @@ export default function ItemCard({props}: { props: IItemCardProps }) {
                     <span>{item.department || 'No office'}</span>
                 </CardDescription>
             </CardContent>
-            <CardFooter className="pt-2">
-                <Button onClick={handleRequestClick} className='w-full text-black'>Request to Borrow</Button>
-            </CardFooter>
         </Card>
     );
 }

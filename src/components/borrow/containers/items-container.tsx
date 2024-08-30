@@ -2,15 +2,15 @@
 // TODO: Make the filter, filter all the items and not just whats
 
 import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
-import { motion } from "framer-motion";
+import {motion} from "framer-motion";
 import {IItem} from "@/lib/interfaces";
-import ItemCard from "../presentational/item-card";
-import SpecificItemModal from "@/components/borrow/presentational/specific-item-modal";
+import SpecificItemModal from "@/components/borrow/presentational/item-modal";
 import {useItems} from "@/hooks/borrow/useItems";
 import {useFilteredItems} from "@/hooks/borrow/useFilteredItems";
 import FilterAndSearchComponent from "@/components/borrow/presentational/filter-and-search-component";
 import ItemCardSkeleton from "@/components/borrow/presentational/item-card-skeleton";
 import ItemsPagination from "@/components/borrow/presentational/items-pagination";
+import ItemsList from "@/components/borrow/presentational/items-list";
 
 
 const MemoizedFilterAndSearchComponent = React.memo(FilterAndSearchComponent);
@@ -23,7 +23,7 @@ export default function ItemsContainer() {
 
     const {items, isFetchingItems, totalPages, page} = useItems();
 
-    const filteredItems = useFilteredItems({items, filterCategory, filterSearch, filterOffice, sortBy});
+    const filteredItems = useFilteredItems({items});
 
     const [showModal, setShowModal] = useState(false);
     const [modalItem, setModalItem] = useState<IItem>();
@@ -60,7 +60,7 @@ export default function ItemsContainer() {
     useEffect(() => {
         const scrollToTop = async () => {
             await new Promise((resolve) => setTimeout(resolve, 50)); // Ensure the content is loaded before scrolling
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({top: 0, behavior: 'smooth'});
         };
         scrollToTop();
     }, [page]);
@@ -84,9 +84,7 @@ export default function ItemsContainer() {
                 {isFetchingItems ? (
                     <ItemCardSkeleton/>
                 ) : filteredItems && filteredItems.length > 0 ? (
-                    filteredItems.map((item, index) => (
-                        <ItemCard key={index} props={{item, setShowModal, setModalItem}}/>
-                    ))
+                    <ItemsList items={items}/>
                 ) : (
                     <p className="text-center text-muted-foreground col-span-full">
                         No results found {filterSearch ? `for ${filterSearch}` : null}
@@ -101,7 +99,7 @@ export default function ItemsContainer() {
                 />
             </div>
 
-            <SpecificItemModal props={{showModal, modalItem, setShowModal}}/>
+            <SpecificItemModal/>
         </motion.div>
     );
 }

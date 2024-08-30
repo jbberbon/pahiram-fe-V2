@@ -5,31 +5,49 @@ import {Input} from "@/components/ui/input";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {Button} from "@/components/ui/button";
 import {Calendar} from "@/components/ui/calendar";
-import {IItem} from "@/lib/interfaces";
 import {CalendarIcon} from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area"
+import {getURLParams} from "@/helper/borrow/getURLParams";
+import {updateURLParams} from "@/helper/borrow/updateURLParams";
+import {useRouter} from "next/navigation";
 
+//
+// interface ISpecificItemModalProps {
+//     // showModal: boolean;
+//     // setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+//     // item: IItem | undefined;
+// }
 
-interface ISpecificItemModalProps {
-    showModal: boolean;
-    setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-    modalItem: IItem | undefined;
-}
 // TODO: Implement URL reading instead of useState
 
-export default function SpecificItemModal({props}: { props: ISpecificItemModalProps }) {
-    const {showModal, setShowModal, modalItem} = props;
+export default function ItemModal() {
+    // const {showModal, setShowModal, item} = props;
     const [startDate, setStartDate] = useState<Date | undefined>(undefined);
     const [returnDate, setReturnDate] = useState<Date | undefined>(undefined);
 
     const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
     const [shouldTruncate, setShouldTruncate] = useState(false);
 
-    useEffect(() => {
-        if (modalItem?.description) {
-            setShouldTruncate(modalItem.description.length > 150);
+    const {item, showModalItem} = getURLParams();
+
+    const router = useRouter();
+
+
+    const handleCloseModal = () => {
+        const newUrl = updateURLParams({itemId: '', showModalItem: 0});
+        router.push(newUrl);
+    }
+
+    const handleOpenChange = (open: boolean) => {
+        if (!open) {
+            handleCloseModal();
         }
-    }, [modalItem]);
+    };
+
+    useEffect(() => {
+        if (item?.description) {
+            setShouldTruncate(item.description.length > 150);
+        }
+    }, [item]);
 
     const toggleDescription = () => {
         setIsDescriptionExpanded(!isDescriptionExpanded);
@@ -40,41 +58,43 @@ export default function SpecificItemModal({props}: { props: ISpecificItemModalPr
         return text.slice(0, maxLength) + '...';
     };
 
+    console.log("item: ", item)
+
     return (
-        <Dialog open={showModal} onOpenChange={setShowModal}>
+        <Dialog open={showModalItem} onOpenChange={handleOpenChange}>
             <DialogContent className="sm:max-w-[900px] max-h-[100dvh] overflow-y-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
                         <img
-                            src="/placeholder.svg"
-                            alt={modalItem?.model_name}
+                            src={item?.image || "/image-placeholder.png"}
+                            alt={item?.model_name}
                             width={400}
                             height={300}
                             className="rounded-lg object-cover w-full"
                             style={{aspectRatio: "4/3", objectFit: "cover"}}
                         />
-                        <DialogTitle className="text-2xl font-bold">{modalItem?.model_name}</DialogTitle>
+                        <DialogTitle className="text-2xl font-bold">{item?.model_name}</DialogTitle>
                         {/*Tags*/}
                         <div className="flex items-center justify-between">
                             <span
                                 className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                    modalItem?.in_circulation ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"
+                                    item?.in_circulation ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"
                                 }`}
                             >
-                                {modalItem?.in_circulation ? `${modalItem.in_circulation} in circulation` : "Unavailable"}
+                                {item?.in_circulation ? `${item.in_circulation} in circulation` : "Unavailable"}
                             </span>
                             <div className="flex items-center gap-3">
                                 <span
-                                    className="text-sm text-muted-foreground">{modalItem?.group_category_id || "No category"}</span>
+                                    className="text-sm text-muted-foreground">{item?.group_category_id || "No category"}</span>
                                 <span
-                                    className="text-sm text-muted-foreground">{modalItem?.department || "No designated office"}</span>
+                                    className="text-sm text-muted-foreground">{item?.department || "No designated office"}</span>
                             </div>
                         </div>
                         <div className="max-h-[130px] overflow-y-auto space-y-2">
                             <p className="text-muted-foreground">
                                 {shouldTruncate && !isDescriptionExpanded
-                                    ? truncateDescription(modalItem?.description || "No description available.", 150)
-                                    : modalItem?.description || "No description available."}
+                                    ? truncateDescription(item?.description || "No description available.", 150)
+                                    : item?.description || "No description available."}
                             </p>
                             {shouldTruncate && (
                                 <Button variant="link" onClick={toggleDescription} className="p-0">
@@ -178,10 +198,12 @@ export default function SpecificItemModal({props}: { props: ISpecificItemModalPr
                 </div>
                 <DialogFooter>
                     <div className="flex justify-end gap-2 mt-4">
-                        <Button variant="outline" onClick={() => setShowModal(false)}>
+                        <Button variant="outline" onClick={() => handleCloseModal()}>
                             Cancel
                         </Button>
-                        <Button onClick={() => setShowModal(false)}>
+                        <Button onClick={() => {
+                            handleCloseModal()
+                        }}>
                             Add to Borrowing Cart
                         </Button>
                     </div>
