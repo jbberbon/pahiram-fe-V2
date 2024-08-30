@@ -8,7 +8,7 @@ This section outlines the tasks that are planned or currently being worked on fo
 ## Frontend Development
 - [ ] **Ensure that all cookie storing or local storage storing has http only flags in it**
 
-- [ ] **Store the filter, search, page, sort, item id, item-modal-open, state of borrowing cart**
+- [ ] **Store the filter, search, page, sort, item id, item-modal-open, state of borrowing cart in the URL**
 
 - [ ] **Create error, 404, unauthroized, etc. pages**
 
@@ -31,7 +31,7 @@ This section outlines the tasks that are planned or currently being worked on fo
   *(File: `login-form.tsx`, Line: 154)*
   Create a dedicated page for terms and conditions.
 
-- [ ] **Make the filter, filter all the items and not just what's**
+- [ ] **Make the filter, filter all the items and not just what's in the page**
   *(File: `items-container.tsx`, Line: 2)*
   Enhance the filtering logic to apply to all items.
 
