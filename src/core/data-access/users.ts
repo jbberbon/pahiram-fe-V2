@@ -16,6 +16,7 @@ export const logoutUser = async () => {
  */
 export const loginUser = async (input: ILoginInput): Promise<ILoginOutput> => {
     const {email, password, remember} = input;
+    // TODO: Call the server api in the env for prod
     const loginApi = "http://127.0.0.1/api" + "/login";
 
     try {

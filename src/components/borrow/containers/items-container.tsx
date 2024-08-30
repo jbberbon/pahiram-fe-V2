@@ -1,4 +1,5 @@
 "use client";
+// TODO: Make the filter, filter all the items and not just whats
 
 import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import { motion } from "framer-motion";
@@ -21,6 +22,7 @@ export default function ItemsContainer() {
     const [filterSearch, setFilterSearch] = useState("");
 
     const {items, isFetchingItems, totalPages, page} = useItems();
+
     const filteredItems = useFilteredItems({items, filterCategory, filterSearch, filterOffice, sortBy});
 
     const [showModal, setShowModal] = useState(false);

@@ -7,6 +7,8 @@ import {Button} from "@/components/ui/button";
 import {Calendar} from "@/components/ui/calendar";
 import {IItem} from "@/lib/interfaces";
 import {CalendarIcon} from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area"
+
 
 interface ISpecificItemModalProps {
     showModal: boolean;
@@ -35,12 +37,12 @@ export default function SpecificItemModal({props}: { props: ISpecificItemModalPr
 
     const truncateDescription = (text: string, maxLength: number) => {
         if (text.length <= maxLength) return text;
-        return text.substr(0, maxLength) + '...';
+        return text.slice(0, maxLength) + '...';
     };
 
     return (
         <Dialog open={showModal} onOpenChange={setShowModal}>
-            <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto">
+            <DialogContent className="sm:max-w-[900px] max-h-[100dvh] overflow-y-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
                         <img
@@ -63,9 +65,9 @@ export default function SpecificItemModal({props}: { props: ISpecificItemModalPr
                             </span>
                             <div className="flex items-center gap-3">
                                 <span
-                                    className="text-sm text-muted-foreground">{modalItem?.category || "No category"}</span>
+                                    className="text-sm text-muted-foreground">{modalItem?.group_category_id || "No category"}</span>
                                 <span
-                                    className="text-sm text-muted-foreground">{modalItem?.office || "No designated office"}</span>
+                                    className="text-sm text-muted-foreground">{modalItem?.department || "No designated office"}</span>
                             </div>
                         </div>
                         <div className="max-h-[130px] overflow-y-auto space-y-2">

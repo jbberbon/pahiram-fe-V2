@@ -20,14 +20,14 @@ export const useFilteredItems = ({
     return useMemo(() => {
         return items
             .filter((item) => {
-                if (filterCategory && item.category !== filterCategory) return false
-                if (filterOffice && item.office !== filterOffice) return false;
+                if (filterCategory && item.group_category_id !== filterCategory) return false
+                if (filterOffice && item.department !== filterOffice) return false;
                 if (filterSearch) {
                     const searchLower = filterSearch.toLowerCase();
                     return (
                         item.model_name.toLowerCase().includes(searchLower) ||
-                        (item.category && item.category.toLowerCase().includes(searchLower)) ||
-                        (item.office && item.office.toLowerCase().includes(searchLower))
+                        (item.group_category_id && item.group_category_id.toLowerCase().includes(searchLower)) ||
+                        (item.department && item.department.toLowerCase().includes(searchLower))
                     );
                 }
                 return true;
@@ -36,7 +36,7 @@ export const useFilteredItems = ({
                 if (sortBy === "name") {
                     return a.model_name.localeCompare(b.model_name)
                 } else if (sortBy === "office") {
-                    return a.office.localeCompare(b.office)
+                    return a.department.localeCompare(b.department)
                 }
                 return 0
             })
