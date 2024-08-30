@@ -65,9 +65,9 @@ export default function SpecificItemModal({props}: { props: ISpecificItemModalPr
                             </span>
                             <div className="flex items-center gap-3">
                                 <span
-                                    className="text-sm text-muted-foreground">{modalItem?.category || "No category"}</span>
+                                    className="text-sm text-muted-foreground">{modalItem?.group_category_id || "No category"}</span>
                                 <span
-                                    className="text-sm text-muted-foreground">{modalItem?.office || "No designated office"}</span>
+                                    className="text-sm text-muted-foreground">{modalItem?.department || "No designated office"}</span>
                             </div>
                         </div>
                         <div className="max-h-[130px] overflow-y-auto space-y-2">

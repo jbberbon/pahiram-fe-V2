@@ -9,6 +9,7 @@ import {LayoutDashboard} from "lucide-react";
 import {Heading} from "@radix-ui/themes";
 import {LoadingComponent} from "@/components/common/loading-component";
 import {useEffect, useState} from "react";
+// TODO: Add loading page before going to logout page
 
 export default function LogoutPage() {
     const [isRedirecting, setIsRedirecting] = useState(false);

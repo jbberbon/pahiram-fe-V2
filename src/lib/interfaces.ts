@@ -17,16 +17,18 @@ export interface IGetItemsPaginationApiResponse {
 export interface IItem {
     "id": string,
     "image": string,
-    "apc_item_id": string,
     "model_name": string,
+    "is_required_supervisor_approval": number,
+    // TODO: Suggest to change to category and return a string with spaces and not _ as the separator
+    "group_category_id": string,
+    "department": string,
     // TODO: Add these attributes in the backend
-    "category": string,
     "in_circulation": number,
     "availability": string,
     "description": string,
     "status": string,
     "purchase_order_id": string,
-    "office": string,
+
     "designated_to": string,
     "unit_cost": string,
     "warranty_expiration": string
