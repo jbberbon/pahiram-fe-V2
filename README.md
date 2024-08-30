@@ -6,6 +6,10 @@
 This section outlines the tasks that are planned or currently being worked on for this project. Tasks are categorized for better organization and prioritization.
 
 ## Frontend Development
+- [ ] **Ensure that all cookie storing or local storage storing has http only flags in it**
+
+- [ ] **Store the filter, search, page, sort, item id, item-modal-open, state of borrowing cart**
+
 - [ ] **Create error, 404, unauthroized, etc. pages**
 
 - [ ] **Borrowing Cart**
