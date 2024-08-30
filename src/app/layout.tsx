@@ -8,6 +8,7 @@ import {siteConfig} from "@/config/siteConfig"
 import "../styles/globals.css";
 
 import {ThemeProvider} from "@/providers/themeProvider";
+import { CartProvider } from "@/providers/CartContext";
 
 export const metadata: Metadata = {
     metadataBase: new URL(
@@ -37,17 +38,15 @@ export const metadata: Metadata = {
     }
 };
 
-export default function RootLayout({
-                                       children
-                                   }: Readonly<{
-    children: React.ReactNode;
-}>) {
+export default function RootLayout({children }: Readonly<{children: React.ReactNode;}>) {
     return (
         <html lang="en" suppressHydrationWarning>
         <body className={GeistSans.className}>
+        <CartProvider>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
         </ThemeProvider>
+        </CartProvider>
         </body>
         </html>
     );
