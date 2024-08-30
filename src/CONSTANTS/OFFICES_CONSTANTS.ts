@@ -99,6 +99,17 @@ const rolesByOffice = Object.keys(OFFICES_CONSTANTS).reduce((acc, officeAcronym)
     return acc;
 }, {} as { [key: string]: { [key: string]: RoleDetails } });
 
-export { OFFICES_CONSTANTS, LENDING_OFFICES_ACRONYMS, LIST_OF_OFFICES, rolesByOffice };
+// Create a constant to return only the objects where is_lending_office is true
+const LENDING_OFFICES = Object.keys(OFFICES_CONSTANTS).reduce((acc, officeAcronym) => {
+    const office = OFFICES_CONSTANTS[officeAcronym];
+    if (office.is_lending_office) {
+        acc[officeAcronym] = office;
+    }
+    return acc;
+}, {} as OfficesConstants);
+
+
+
+export { OFFICES_CONSTANTS, LENDING_OFFICES_ACRONYMS, LIST_OF_OFFICES, rolesByOffice, LENDING_OFFICES};
 export type OfficeAcronym = keyof typeof OFFICES_CONSTANTS;
 export type RoleForOffice<O extends OfficeAcronym> = keyof typeof rolesByOffice[O];

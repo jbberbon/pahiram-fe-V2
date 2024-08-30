@@ -8,8 +8,8 @@ export default function ItemsList({
     items: IItem[]
 }) {
     return (
-        items.map((item) => (
-            <ItemCard key={item.id} props={{item}}/>
+        items.map((item, index) => (
+            <ItemCard key={index} props={{item}}/>
         ))
     )
 }

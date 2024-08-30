@@ -7,7 +7,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import {Button} from "@/components/ui/button";
-import {OFFICES_CONSTANTS} from "@/CONSTANTS/OFFICES_CONSTANTS";
+import {LENDING_OFFICES, OFFICES_CONSTANTS} from "@/CONSTANTS/OFFICES_CONSTANTS";
 import {Search} from "lucide-react";
 import {Input} from "@/components/ui/input";
 import {ChevronDownIcon} from "@radix-ui/react-icons";
@@ -48,7 +48,7 @@ export default function FilterAndSearchComponent({props}: { props: IFilterAndSea
         filterOffice
     } = getURLParams();
 
-    const LIST_OF_OFFICES = useMemo(() => Object.keys(OFFICES_CONSTANTS), []);
+    const LIST_OF_OFFICES = useMemo(() => Object.keys(LENDING_OFFICES), []);
 
     const handleSortChange = useCallback((sortOption: string) => {
         // setSortBy(sortOption);

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import {IItem} from "@/lib/interfaces";
 import {updateURLParams} from "@/helper/borrow/updateURLParams";
 import {useRouter} from "next/navigation";
+import {motion} from 'framer-motion';
 
 interface IItemCardProps {
     item: IItem
@@ -26,38 +27,43 @@ export default function ItemCard({props}: { props: IItemCardProps }) {
 
 
     return (
-        <Card onClick={() => {
-            handleRequestClick()
-        }} className="w-full h-full flex flex-col cursor-pointer">
-            <CardHeader className="p-0">
-                <div className="relative w-full aspect-[4/3]">
-                    <Image
-                        src={item.image || "/image-placeholder.png"}
-                        alt={item.model_name || 'item'}
-                        layout="fill"
-                        objectFit="cover"
-                        className="rounded-t-lg"
-                    />
-                </div>
-            </CardHeader>
-            <CardContent className="flex-grow">
-                <h1 className="text-lg font-semibold mt-2 mb-1">{item.model_name || 'Item Group (Item Model)'}</h1>
-                <p className="text-sm text-neutral-500 mb-2 line-clamp-2">
-                    {item.description || 'No description available.'}
-                </p>
-                <CardDescription className="text-xs">
-                    <div className="flex items-center justify-between mb-2">
-                        <span>{item.group_category_id || 'No category'}</span>
-                        {item.in_circulation ? (
-                            <span
-                                className="text-green-600 bg-green-100 px-2 py-1 rounded-full">{`${item.in_circulation} in circulation`}</span>
-                        ) : (
-                            <span className="text-red-600 bg-red-100 px-2 py-1 rounded-full">Unavailable</span>
-                        )}
+        <motion.div
+            whileHover={{y: -5, boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.2)"}}
+            className="w-full h-full flex flex-col cursor-pointer group"
+        >
+            <Card onClick={() => {
+                handleRequestClick()
+            }} className="w-full h-full flex flex-col cursor-pointer hover:bg-[hsl(var(--primary))] group">
+                <CardHeader className="p-0">
+                    <div className="relative w-full aspect-[4/3]">
+                        <Image
+                            src={item.image || "/image-placeholder.png"}
+                            alt={item.model_name || 'item'}
+                            layout="fill"
+                            objectFit="cover"
+                            className="rounded-t-lg"
+                        />
                     </div>
-                    <span>{item.department || 'No office'}</span>
-                </CardDescription>
-            </CardContent>
-        </Card>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                    <h1 className="text-lg font-semibold mt-2 mb-1 dark:group-hover:text-primary-foreground">{item.model_name || 'Item Group (Item Model)'}</h1>
+                    <p className="text-sm text-neutral-500 mb-2 line-clamp-2">
+                        {item.description || 'No description available.'}
+                    </p>
+                    <CardDescription className="text-xs">
+                        <div className="flex items-center justify-between mb-2">
+                            <span>{item.group_category_id || 'No category'}</span>
+                            {item.in_circulation ? (
+                                <span
+                                    className="text-green-600 bg-green-100 px-2 py-1 rounded-full">{`${item.in_circulation} in circulation`}</span>
+                            ) : (
+                                <span className="text-red-600 bg-red-100 px-2 py-1 rounded-full">Unavailable</span>
+                            )}
+                        </div>
+                        <span>{item.department || 'No office'}</span>
+                    </CardDescription>
+                </CardContent>
+            </Card>
+        </motion.div>
     );
 }

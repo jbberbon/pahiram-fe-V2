@@ -3,7 +3,6 @@
 
 import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {motion} from "framer-motion";
-import {IItem} from "@/lib/interfaces";
 import SpecificItemModal from "@/components/borrow/presentational/item-modal";
 import {useItems} from "@/hooks/borrow/useItems";
 import {useFilteredItems} from "@/hooks/borrow/useFilteredItems";
@@ -25,8 +24,6 @@ export default function ItemsContainer() {
 
     const filteredItems = useFilteredItems({items});
 
-    const [showModal, setShowModal] = useState(false);
-    const [modalItem, setModalItem] = useState<IItem>();
     const [showFilters, setShowFilters] = useState(true);
     const [gridColumns, setGridColumns] = useState(3);
 
@@ -84,7 +81,7 @@ export default function ItemsContainer() {
                 {isFetchingItems ? (
                     <ItemCardSkeleton/>
                 ) : filteredItems && filteredItems.length > 0 ? (
-                    <ItemsList items={items}/>
+                    <ItemsList items={filteredItems}/>
                 ) : (
                     <p className="text-center text-muted-foreground col-span-full">
                         No results found {filterSearch ? `for ${filterSearch}` : null}

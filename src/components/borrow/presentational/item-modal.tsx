@@ -33,7 +33,7 @@ export default function ItemModal() {
 
 
     const handleCloseModal = () => {
-        const newUrl = updateURLParams({itemId: '', showModalItem: 0});
+        const newUrl = updateURLParams({item: '', showModalItem: 0});
         router.push(newUrl);
     }
 
@@ -70,7 +70,7 @@ export default function ItemModal() {
                             alt={item?.model_name}
                             width={400}
                             height={300}
-                            className="rounded-lg object-cover w-full"
+                            className="rounded-lg object-cover w-full mt-5 md:mt-0"
                             style={{aspectRatio: "4/3", objectFit: "cover"}}
                         />
                         <DialogTitle className="text-2xl font-bold">{item?.model_name}</DialogTitle>
