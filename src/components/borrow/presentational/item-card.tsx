@@ -53,6 +53,7 @@ export default function ItemCard({props}: { props: IItemCardProps }) {
                     <CardDescription className="text-xs">
                         <div className="flex items-center justify-between mb-2">
                             <span>{item.group_category_id || 'No category'}</span>
+                            {/*TODO: Remove in circulation*/}
                             {item.in_circulation ? (
                                 <span
                                     className="text-green-600 bg-green-100 px-2 py-1 rounded-full">{`${item.in_circulation} in circulation`}</span>

@@ -9,6 +9,7 @@ import {CalendarIcon} from "lucide-react";
 import {getURLParams} from "@/helper/borrow/getURLParams";
 import {updateURLParams} from "@/helper/borrow/updateURLParams";
 import {useRouter} from "next/navigation";
+// import {useCart} from "@/providers/CartContext"
 
 //
 // interface ISpecificItemModalProps {
@@ -31,6 +32,7 @@ export default function ItemModal() {
 
     const router = useRouter();
 
+    // const {addItemToCart} = useCart();
 
     const handleCloseModal = () => {
         const newUrl = updateURLParams({item: '', showModalItem: 0});
@@ -58,6 +60,14 @@ export default function ItemModal() {
         return text.slice(0, maxLength) + '...';
     };
 
+    // const handleAddToCart = () => {
+    //     if (item) {
+    //         addItemToCart(item);
+    //         const newUrl = updateURLParams({ showModalItem: 0});
+    //         router.push(newUrl); // Optionally close the modal
+    //     }
+    // };
+
     console.log("item: ", item)
 
     return (
@@ -74,6 +84,8 @@ export default function ItemModal() {
                             style={{aspectRatio: "4/3", objectFit: "cover"}}
                         />
                         <DialogTitle className="text-2xl font-bold">{item?.model_name}</DialogTitle>
+
+                        {/*TODO: Dynamic tag in circulation */}
                         {/*Tags*/}
                         <div className="flex items-center justify-between">
                             <span
