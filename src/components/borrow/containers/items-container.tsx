@@ -1,7 +1,7 @@
 "use client";
 // TODO: Make the filter, filter all the items and not just whats
 
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, {Suspense, useCallback, useEffect, useRef, useState} from "react";
 import {motion} from "framer-motion";
 import SpecificItemModal from "@/components/borrow/presentational/item-modal";
 import {useItems} from "@/hooks/borrow/useItems";
@@ -13,7 +13,7 @@ import ItemsList from "@/components/borrow/presentational/items-list";
 import {getURLParams} from "@/helper/borrow/getURLParams";
 
 
-const MemoizedFilterAndSearchComponent = React.memo(FilterAndSearchComponent);
+export const experimental_ppr = true
 
 export default function ItemsContainer() {
     const {items, isFetchingItems, totalPages, page} = useItems();
@@ -57,22 +57,24 @@ export default function ItemsContainer() {
             animate={{opacity: 1, y: 0}}
             transition={{duration: 0.5}}
         >
-            <MemoizedFilterAndSearchComponent showFilters={showFilters}/>
+            <FilterAndSearchComponent showFilters={showFilters}/>
 
             <div className={`grid gap-4 ${
                 gridColumns === 1 ? 'grid-cols-1' :
                     gridColumns === 2 ? 'grid-cols-2' :
                         'grid-cols-3'
             }`}>
-                {isFetchingItems ? (
-                    <ItemCardSkeleton/>
-                ) : filteredItems && filteredItems.length > 0 ? (
-                    <ItemsList items={filteredItems}/>
-                ) : (
-                    <p className="text-center text-muted-foreground col-span-full">
-                        No results found {filterSearch ? `for ${filterSearch}` : null}
-                    </p>
-                )}
+                {
+                    isFetchingItems ? (
+                            <ItemCardSkeleton/>
+                        ) :
+                        (
+                            <Suspense fallback={<ItemCardSkeleton/>}>
+                                <ItemsList items={filteredItems}/>
+                            </Suspense>
+                        )
+                }
+
             </div>
 
             <div className="mt-4">
