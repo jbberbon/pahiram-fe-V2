@@ -11,6 +11,8 @@ import ItemCardSkeleton from "@/components/borrow/presentational/item-card-skele
 import ItemsPagination from "@/components/borrow/presentational/items-pagination";
 import ItemsList from "@/components/borrow/presentational/items-list";
 import {getURLParams} from "@/helper/borrow/getURLParams";
+import {updateURLParams} from "@/helper/borrow/updateURLParams";
+import {useRouter} from "next/navigation";
 
 
 export const experimental_ppr = true
@@ -34,6 +36,7 @@ export default function ItemsContainer() {
             setGridColumns(width < 600 ? 1 : width < 900 ? 2 : 3);
         }
     }, []);
+
     useEffect(() => {
         updateLayout();
         window.addEventListener('resize', updateLayout);
@@ -47,6 +50,13 @@ export default function ItemsContainer() {
         };
         scrollToTop();
     }, [page]);
+
+    const router = useRouter();
+
+    const handlePageChange = useCallback((page: number) => {
+        const newUrl = updateURLParams({page: page.toString()});
+        router.push(newUrl);
+    }, []);
 
 
     return (
@@ -66,12 +76,17 @@ export default function ItemsContainer() {
             }`}>
                 {
                     isFetchingItems ? (
-                            <ItemCardSkeleton/>
-                        ) :
+                        <ItemCardSkeleton/>
+                    ) : filteredItems && filteredItems.length > 0 ?
                         (
                             <Suspense fallback={<ItemCardSkeleton/>}>
                                 <ItemsList items={filteredItems}/>
                             </Suspense>
+                        ) :
+                        (
+                            <p className="text-center text-muted-foreground col-span-full">
+                                No results found {filterSearch ? `for ${filterSearch}` : null}
+                            </p>
                         )
                 }
 
@@ -81,6 +96,7 @@ export default function ItemsContainer() {
                 <ItemsPagination
                     currentPage={page}
                     totalPages={totalPages}
+                    onPageChange={handlePageChange}
                 />
             </div>
 
