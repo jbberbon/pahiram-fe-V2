@@ -1,18 +1,32 @@
 'use client'
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { IItem } from '../lib/interfaces';
 
 interface CartContextType {
     cartItems: IItem[];
     addItemToCart: (item: IItem) => void;
-    removeItem: (itemId: string) => void; // Add the removeItem function type
+    removeItem: (itemId: string) => void; 
+    clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [cartItems, setCartItems] = useState<IItem[]>([]);
+
+     // Load cart items from localStorage on initial render
+     useEffect(() => {
+        const storedCartItems = localStorage.getItem('cartItems');
+        if (storedCartItems) {
+            setCartItems(JSON.parse(storedCartItems));
+        }
+    }, []);
+
+    // Update localStorage whenever the cartItems state changes
+    useEffect(() => {
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }, [cartItems]);
   
     const addItemToCart = (item: IItem) => {
         setCartItems((prevItems) => [...prevItems, item]);
@@ -22,8 +36,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setCartItems((prevItems) => prevItems.filter(item => item.id !== itemId));
     };
 
+    const clearCart = () => {
+        setCartItems([]);
+    };
+
     return (
-        <CartContext.Provider value={{ cartItems, addItemToCart, removeItem }}>
+        <CartContext.Provider value={{ cartItems, addItemToCart, removeItem, clearCart }}>
             {children}
         </CartContext.Provider>
     );

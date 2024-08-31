@@ -7,7 +7,7 @@ import { IItem } from '@/lib/interfaces';
 
 interface CartItemProps {
     item: IItem;
-    onRemove: () => void; // Add onRemove function type
+    onRemove: () => void; 
 }
 
 export default function CartItem({ item, onRemove }: CartItemProps) {
@@ -24,15 +24,23 @@ export default function CartItem({ item, onRemove }: CartItemProps) {
                         <div className="ml-4 mt-4 flex flex-col w-3/5 truncate">
                             <h1>{item.model_name}</h1>
                             <div className="flex items-center justify-between">
-                                <div>
-                                    <h1 className="font-normal text-lg text-slate-600 dark:text-gray-400">3</h1>
+                                <div className="flex items-center space-x-2 my-2">
+                                    <Button
+                                        variant="outline"
+                                        className="px-2 py-1"
+                                    >
+                                        -
+                                    </Button>
+                                    <span className="text-lg font-medium text-slate-600 dark:text-gray-400">
+                                        1
+                                    </span>
+                                    <Button
+                                        variant="outline"
+                                        className="px-2 py-1"
+                                    >
+                                        +
+                                    </Button>
                                 </div>
-                                <Button 
-                                    variant="link" 
-                                    className="text-slate-600 dark:text-gray-400 hover:underline p-0"
-                                >
-                                    Click to Edit
-                                </Button>
                             </div>
                         </div>
                     </div>

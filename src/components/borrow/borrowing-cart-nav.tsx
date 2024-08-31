@@ -10,7 +10,7 @@ import { useCart } from "@/providers/CartContext";
 
 export default function BorrowingCartNav() {
 
-    const { cartItems , removeItem} = useCart();
+    const { cartItems , removeItem, clearCart} = useCart();
 
     return (
         <TooltipProvider disableHoverableContent>
@@ -38,7 +38,9 @@ export default function BorrowingCartNav() {
                                 )}
                             <SheetFooter>
                                 <SheetClose className="flex justify-between my-5">
-                                    <Button className="flex items-center mr-4 bg-transparent border-2 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800">
+                                    <Button 
+                                    onClick={clearCart}
+                                    className="flex items-center mr-4 bg-transparent border-2 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800">
                                         <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         className="mr-2 h-4 w-4"
