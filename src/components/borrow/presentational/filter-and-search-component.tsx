@@ -15,30 +15,8 @@ import {useRouter} from "next/navigation";
 import {updateURLParams} from "@/helper/borrow/updateURLParams";
 import {getURLParams} from "@/helper/borrow/getURLParams";
 
-interface IFilterAndSearchProps {
-    showFilters: boolean;
-    // filterCategory: string;
-    // setFilterCategory: (category: string) => void;
-    // filterOffice: string;
-    // setFilterOffice: (office: string) => void;
-    // sortBy: string;
-    // setSortBy: (sort: string) => void;
-    // filterSearch: string;
-    // setFilterSearch: (search: string) => void;
-}
 
-export default function FilterAndSearchComponent({props}: { props: IFilterAndSearchProps }) {
-    const {
-        showFilters,
-        // filterCategory,
-        // setFilterCategory,
-        // filterOffice,
-        // setFilterOffice,
-        // sortBy,
-        // setSortBy,
-        // filterSearch,
-        // setFilterSearch
-    } = props;
+export default function FilterAndSearchComponent({showFilters}: { showFilters: boolean } ) {
 
     const router = useRouter();
     const {

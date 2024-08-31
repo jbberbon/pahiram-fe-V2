@@ -1,7 +1,7 @@
 "use client";
 // TODO: Make the filter, filter all the items and not just whats
 
-import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {motion} from "framer-motion";
 import SpecificItemModal from "@/components/borrow/presentational/item-modal";
 import {useItems} from "@/hooks/borrow/useItems";
@@ -10,16 +10,12 @@ import FilterAndSearchComponent from "@/components/borrow/presentational/filter-
 import ItemCardSkeleton from "@/components/borrow/presentational/item-card-skeleton";
 import ItemsPagination from "@/components/borrow/presentational/items-pagination";
 import ItemsList from "@/components/borrow/presentational/items-list";
+import {getURLParams} from "@/helper/borrow/getURLParams";
 
 
 const MemoizedFilterAndSearchComponent = React.memo(FilterAndSearchComponent);
 
 export default function ItemsContainer() {
-    const [filterCategory, setFilterCategory] = useState("");
-    const [filterOffice, setFilterOffice] = useState("");
-    const [sortBy, setSortBy] = useState("name");
-    const [filterSearch, setFilterSearch] = useState("");
-
     const {items, isFetchingItems, totalPages, page} = useItems();
 
     const filteredItems = useFilteredItems({items});
@@ -27,19 +23,9 @@ export default function ItemsContainer() {
     const [showFilters, setShowFilters] = useState(true);
     const [gridColumns, setGridColumns] = useState(3);
 
-    const filterProps = useMemo(() => ({
-        showFilters,
-        filterCategory,
-        setFilterCategory,
-        filterOffice,
-        setFilterOffice,
-        sortBy,
-        setSortBy,
-        filterSearch,
-        setFilterSearch,
-    }), [showFilters, filterCategory, filterOffice, sortBy, filterSearch]);
-
     const containerRef = useRef<HTMLDivElement>(null);
+
+    const {filterSearch} = getURLParams();
 
     const updateLayout = useCallback(() => {
         if (containerRef.current) {
@@ -71,7 +57,7 @@ export default function ItemsContainer() {
             animate={{opacity: 1, y: 0}}
             transition={{duration: 0.5}}
         >
-            <MemoizedFilterAndSearchComponent props={filterProps}/>
+            <MemoizedFilterAndSearchComponent showFilters={showFilters}/>
 
             <div className={`grid gap-4 ${
                 gridColumns === 1 ? 'grid-cols-1' :

@@ -6,6 +6,8 @@
 This section outlines the tasks that are planned or currently being worked on for this project. Tasks are categorized for better organization and prioritization.
 
 ## Frontend Development
+- [ ] **Apply lazy loading to components, libraries, etc.**
+
 - [ ] **Mobile view of filter and search component**
 
 - [ ] **Ensure that all cookie storing or local storage storing has http only flags in it**

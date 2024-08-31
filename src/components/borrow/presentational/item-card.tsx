@@ -28,7 +28,7 @@ export default function ItemCard({props}: { props: IItemCardProps }) {
 
     return (
         <motion.div
-            whileHover={{y: -5, boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.2)"}}
+            whileHover={{y: -5}}
             className="w-full h-full flex flex-col cursor-pointer group"
         >
             <Card onClick={() => {
