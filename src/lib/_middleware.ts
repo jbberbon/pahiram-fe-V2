@@ -133,8 +133,10 @@ export const authMiddleware = async ({request}: MiddlewareFunctionProps) => {
     if (isAuthRoute) {
         if (isAuthenticated) {
             if (auth && auth?.user) {
+                console.log("user: ", auth.user);
                 const nextUrl = request.nextUrl;
                 if (auth.user.department != null) {
+
                     return NextResponse.redirect(new URL(OFFICE_FIRST_MENU_ITEM(), nextUrl));
                 }
                 return NextResponse.redirect(new URL(BORROWER_FIRST_MENU_ITEM, nextUrl))

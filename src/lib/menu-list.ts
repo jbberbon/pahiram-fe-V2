@@ -126,7 +126,7 @@ export function useMenuList(pathname: string): Group[] {
 export function useFirstMenuItem(): string {
     const {role, office} = useUserStore((state: unknown) => (state as UserState).userData);
 
-    return getFirstMenuItemOffice(role.toString(), office?.toString());
+    return getFirstMenuItemOffice(role?.toString(), office?.toString());
 }
 
 /**
