@@ -15,7 +15,6 @@ import {updateURLParams} from "@/helper/borrow/updateURLParams";
 import {useRouter} from "next/navigation";
 
 
-export const experimental_ppr = true
 
 export default function ItemsContainer() {
     const {items, isFetchingItems, totalPages, page} = useItems();
@@ -74,21 +73,15 @@ export default function ItemsContainer() {
                     gridColumns === 2 ? 'grid-cols-2' :
                         'grid-cols-3'
             }`}>
-                {
-                    isFetchingItems ? (
-                        <ItemCardSkeleton/>
-                    ) : filteredItems && filteredItems.length > 0 ?
-                        (
-                            <Suspense fallback={<ItemCardSkeleton/>}>
-                                <ItemsList items={filteredItems}/>
-                            </Suspense>
-                        ) :
-                        (
-                            <p className="text-center text-muted-foreground col-span-full">
-                                No results found {filterSearch ? `for ${filterSearch}` : null}
-                            </p>
-                        )
-                }
+                {isFetchingItems ? (
+                    <ItemCardSkeleton/>
+                ) : filteredItems && filteredItems.length > 0 ? (
+                    <ItemsList items={filteredItems}/>
+                ) : (
+                    <p className="text-center text-muted-foreground col-span-full">
+                        No results found {filterSearch ? `for ${filterSearch}` : null}
+                    </p>
+                )}
 
             </div>
 

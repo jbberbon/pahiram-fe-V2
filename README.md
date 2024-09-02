@@ -6,6 +6,9 @@
 This section outlines the tasks that are planned or currently being worked on for this project. Tasks are categorized for better organization and prioritization.
 
 ## Frontend Development
+- [ ] **Add CSP for security**
+      *Link: (https://nextjs.org/docs/app/building-your-application/configuring/content-security-policy)*
+
 - [ ] **Apply lazy loading to components, libraries, etc.**
 
 - [ ] **Mobile view of filter and search component**
