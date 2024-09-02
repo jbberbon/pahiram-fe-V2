@@ -8,6 +8,8 @@ import {Calendar} from "@/components/ui/calendar";
 import {IItem} from "@/lib/interfaces";
 import {CalendarIcon} from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area"
+import Image from "next/image";
+import { useCart } from "@/providers/CartContext";
 
 
 interface ISpecificItemModalProps {
@@ -24,12 +26,14 @@ export default function SpecificItemModal({props}: { props: ISpecificItemModalPr
 
     const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
     const [shouldTruncate, setShouldTruncate] = useState(false);
+    const {addItemToCart} = useCart();
 
     useEffect(() => {
         if (modalItem?.description) {
             setShouldTruncate(modalItem.description.length > 150);
         }
     }, [modalItem]);
+    
 
     const toggleDescription = () => {
         setIsDescriptionExpanded(!isDescriptionExpanded);
@@ -40,14 +44,21 @@ export default function SpecificItemModal({props}: { props: ISpecificItemModalPr
         return text.slice(0, maxLength) + '...';
     };
 
+    const handleAddToCart = () => {
+        if (modalItem) {
+          addItemToCart(modalItem);
+          setShowModal(false); // Optionally close the modal
+        }
+      };
+
     return (
         <Dialog open={showModal} onOpenChange={setShowModal}>
             <DialogContent className="sm:max-w-[900px] max-h-[100dvh] overflow-y-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
-                        <img
+                        <Image
                             src="/placeholder.svg"
-                            alt={modalItem?.model_name}
+                            alt={modalItem?.model_name || "Image Item"} 
                             width={400}
                             height={300}
                             className="rounded-lg object-cover w-full"
@@ -181,7 +192,7 @@ export default function SpecificItemModal({props}: { props: ISpecificItemModalPr
                         <Button variant="outline" onClick={() => setShowModal(false)}>
                             Cancel
                         </Button>
-                        <Button onClick={() => setShowModal(false)}>
+                        <Button onClick={handleAddToCart}>
                             Add to Borrowing Cart
                         </Button>
                     </div>
